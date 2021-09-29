@@ -4,6 +4,8 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabNavigator from './src/components/navigation/TabNavigator';
+import {Provider} from 'react-redux';
+import {store} from './src/app/store';
 
 // import HomeScreen from './src/components/screens/HomeScreen';
 // import EditScreen from './src/components/screens/EditScreen';
@@ -14,9 +16,11 @@ import BottomTabNavigator from './src/components/navigation/TabNavigator';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <BottomTabNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <BottomTabNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 };
 
