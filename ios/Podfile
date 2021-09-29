@@ -4,6 +4,8 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '13.0'
 
 target 'BrooklynChallenge' do
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   config = use_native_modules!
 
   use_react_native!(
@@ -12,6 +14,7 @@ target 'BrooklynChallenge' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
 
   target 'BrooklynChallengeTests' do
     inherit! :complete
