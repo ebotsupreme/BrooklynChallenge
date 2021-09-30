@@ -33,7 +33,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarLabel: 'Players',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
+            <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
         }}
       />
