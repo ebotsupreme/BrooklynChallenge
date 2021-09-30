@@ -33,7 +33,11 @@ const BottomTabNavigator = () => {
         options={{
           tabBarLabel: 'Players',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="account-multiple"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -43,7 +47,11 @@ const BottomTabNavigator = () => {
         options={{
           tabBarLabel: 'Teams',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="account-group"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
