@@ -5,11 +5,6 @@ import {TabView, SceneMap} from 'react-native-tab-view';
 import West from './West';
 import East from './East';
 
-// const renderScene = SceneMap({
-//   west: West,
-//   east: East,
-// });
-
 const TeamSelectionScreen = () => {
   const [westTeams, setWestTeams] = useState(null);
   const [eastTeams, setEastTeams] = useState(null);
@@ -23,6 +18,8 @@ const TeamSelectionScreen = () => {
 
   // if (data && data.league) {
   //   console.log('data.league.standard: ', data.league.standard);
+  // } else {
+  //   console.log('error', error);
   // }
 
   useEffect(() => {
@@ -31,13 +28,12 @@ const TeamSelectionScreen = () => {
     }
   }, [data]);
 
-  const filterData = data => {
+  const filterData = dataToFilter => {
     const westTeamsFiltered = [];
     const eastTeamsFiltered = [];
 
-    if (data.standard) {
-      data.standard.filter(team => {
-        // console.log('filter team: ', team);
+    if (dataToFilter.standard) {
+      dataToFilter.standard.filter(team => {
         if (team.confName === 'West') {
           westTeamsFiltered.push(team);
         } else if (team.confName === 'East') {
@@ -65,9 +61,6 @@ const TeamSelectionScreen = () => {
 
   return (
     <>
-      {/* <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-       <Text>Team Selection Screen</Text> */}
-
       {error ? (
         <Text>There was an error.</Text>
       ) : isLoading ? (
@@ -83,7 +76,6 @@ const TeamSelectionScreen = () => {
           />
         </>
       ) : null}
-      {/* </View> */}
     </>
   );
 };
