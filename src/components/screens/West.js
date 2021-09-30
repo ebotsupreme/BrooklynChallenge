@@ -1,24 +1,25 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import TeamCard from '../common/TeamCard';
-import {Card} from 'react-native-paper';
 
-const West = ({data}) => {
+const West = ({data, navigation}) => {
   if (data && data.league) {
     console.log('data.league.standard WEST: ', data.league.standard);
   }
+
+  const renderItem = ({item}) => (
+    <TeamCard teamName={item.fullName} navigation={navigation} />
+  );
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-        {data &&
-          data.map(team => (
-            <TeamCard
-              key={team.teamId}
-              teamName={team.fullName}
-              teamId={team.teamId}
-            />
-          ))}
-      </ScrollView>
+      {data && (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => item.teamId}
+        />
+      )}
     </View>
   );
 };

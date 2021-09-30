@@ -8,7 +8,6 @@ module.exports = {
     },
     'react-native-config': {
       platforms: {
-        android: null,
         ios: null,
       },
     },

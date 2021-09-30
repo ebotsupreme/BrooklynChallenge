@@ -5,7 +5,7 @@ import {TabView, SceneMap} from 'react-native-tab-view';
 import West from './West';
 import East from './East';
 
-const TeamSelectionScreen = () => {
+const TeamSelectionScreen = ({navigation}) => {
   const [westTeams, setWestTeams] = useState(null);
   const [eastTeams, setEastTeams] = useState(null);
   const [index, setIndex] = React.useState(0);
@@ -48,16 +48,17 @@ const TeamSelectionScreen = () => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'west':
-        return <West data={westTeams} />;
+        return <West data={westTeams} navigation={navigation} />;
       case 'east':
-        return <East data={eastTeams} />;
+        return <East data={eastTeams} navigation={navigation} />;
       default:
         return null;
     }
   };
 
-  console.log('WEST TEAMS: ', westTeams);
-  console.log('EAST TEAMS: ', eastTeams);
+  // console.log('WEST TEAMS: ', westTeams);
+  // console.log('EAST TEAMS: ', eastTeams);
+  // console.log('teamSelectionScreen NAV', navigation);
 
   return (
     <>
