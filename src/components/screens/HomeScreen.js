@@ -11,7 +11,7 @@ import {
   addTeam,
 } from '../../features/team/teamSlice';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [cityName, setCityName] = useState('');
@@ -96,6 +96,8 @@ const HomeScreen = () => {
       teamState.teamThreeIsActive
     ) {
     }
+
+    navigation.navigate('Team Selection');
 
     // console.log('teamState', teamState);
   };

@@ -2,13 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
 import {Card, Paragraph} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useGetPlayersImageQuery} from '../../services/playerImage';
 
 const PlayerCard = ({player, navigation}) => {
   const [playerImage, setPlayerImage] = useState('');
   const [playerId, setPlayerId] = useState('');
-  const {data, isLoading, error, isFetching, isSuccess, isError} =
-    useGetPlayersImageQuery(player.personId);
 
   const {
     firstName,
@@ -20,19 +17,6 @@ const PlayerCard = ({player, navigation}) => {
     pos,
     nbaDebutYear,
   } = player;
-
-  // console.log('Team card player: ', player);
-  // if (data !== undefined) {
-  //   if (data.length) {
-  // console.log('PlayerCard IMAGE: ', data);
-  //   }
-  // }
-
-  //TODO: get player image
-  // if (player) {
-  //   console.log('player id', player.personId);
-  //   setPlayerImage(player.personId);
-  // }
 
   const handleSelectPlayer = selectedPlayer => {
     const fullName = `${selectedPlayer.firstName} ${selectedPlayer.lastName}`;
@@ -56,8 +40,8 @@ const PlayerCard = ({player, navigation}) => {
   return (
     <Card style={styles.container} onPress={() => handleSelectPlayer(player)}>
       <View style={styles.viewContainer}>
-        {/* <Text>{JSON.stringify(player)}</Text> */}
         <View style={styles.imageContainer}>
+          {/* TODO: uri will need to be env variable along with query calls in all reducers */}
           <Image
             source={{
               uri: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
@@ -86,7 +70,6 @@ const PlayerCard = ({player, navigation}) => {
               <Text style={styles.statName}>Class of:</Text> {nbaDebutYear}
             </Text>
           </View>
-          {/* <MaterialIcons name="add" /> */}
         </View>
       </View>
     </Card>
