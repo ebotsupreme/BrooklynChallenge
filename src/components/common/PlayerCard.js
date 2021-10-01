@@ -21,23 +21,6 @@ const PlayerCard = ({player, navigation}) => {
     nbaDebutYear,
   } = player;
 
-  useEffect(() => {
-    // if (player) {
-    //   console.log('useEffect player: ', player);
-    //   useGetPlayerImageQuery(player.personId);
-    // }
-
-    console.log(
-      firstName,
-      lastName,
-      personId,
-      heightFeet,
-      heightInches,
-      jersey,
-      pos,
-    );
-  }, [data, error, isError, isFetching, isSuccess]);
-
   // console.log('Team card player: ', player);
   // if (data !== undefined) {
   //   if (data.length) {
@@ -81,18 +64,7 @@ const PlayerCard = ({player, navigation}) => {
             }}
             style={{width: 200, height: 200}}
           />
-          <View
-            style={{
-              position: 'absolute',
-              top: 10,
-              left: 5,
-              right: 0,
-              bottom: 0,
-              // justifyContent: 'center',
-              alignItems: 'flex-start',
-
-              // backgroundColor: 'purple',
-            }}>
+          <View style={styles.jersyContainer}>
             <Text style={styles.jersey}>{jersey}</Text>
           </View>
         </View>
@@ -127,10 +99,16 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     backgroundColor: 'blue',
-    // flex: 1,
     flexDirection: 'row',
-    // alignItems: 'center',
     justifyContent: 'center',
+  },
+  jersyContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 5,
+    right: 0,
+    bottom: 0,
+    alignItems: 'flex-start',
   },
   jersey: {
     fontSize: 40,
@@ -141,9 +119,6 @@ const styles = StyleSheet.create({
     minWidth: 50,
     padding: 2,
     textAlign: 'center',
-    // justifyContent: 'center',
-    // alignContent: 'center',
-    // alignSelf: 'center',
   },
   infoContainer: {
     flex: 1,
