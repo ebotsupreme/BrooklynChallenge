@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -17,6 +17,11 @@ const HomeScreen = () => {
   const [cityName, setCityName] = useState('');
   const teamState = useSelector(state => state.team);
   const dispatch = useDispatch();
+
+  let deviceWidth = Dimensions.get('window').width;
+  let deviceHeight = Dimensions.get('window').height;
+  let modalWidth = deviceWidth / 2;
+  let modalHeight = deviceHeight / 2;
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -104,31 +109,35 @@ const HomeScreen = () => {
             onDismiss={hideModal}
             style={styles.modalContainer}
             contentContainerStyle={styles.modalContent}>
-            <TextInput
-              label="Team Name"
-              value={teamName}
-              onChangeText={value => setTeamName(value)}
-            />
-            <TextInput
-              label="City Name"
-              value={cityName}
-              onChangeText={value => setCityName(value)}
-            />
-            <View style={styles.modalButtonContainer}>
-              <Button
-                style={styles.newTeam}
-                icon="account-group"
-                mode="contained"
-                onPress={handleAddTeam}>
-                Add
-              </Button>
-              <Button
-                style={styles.clear}
-                icon="axe"
-                mode="contained"
-                onPress={hideModal}>
-                Cancel
-              </Button>
+            <View>
+              <TextInput
+                label="Team Name"
+                value={teamName}
+                onChangeText={value => setTeamName(value)}
+                style={styles.modalInput}
+              />
+              <TextInput
+                label="City Name"
+                value={cityName}
+                onChangeText={value => setCityName(value)}
+                style={styles.modalInput}
+              />
+              <View style={styles.modalButtonContainer}>
+                <Button
+                  style={styles.newTeam}
+                  icon="account-group"
+                  mode="contained"
+                  onPress={handleAddTeam}>
+                  Add
+                </Button>
+                <Button
+                  style={styles.clear}
+                  icon="axe"
+                  mode="contained"
+                  onPress={hideModal}>
+                  Cancel
+                </Button>
+              </View>
             </View>
           </Modal>
         </Portal>
@@ -160,17 +169,27 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   modalContainer: {
+    flex: 1,
     backgroundColor: '#fafafa',
-    // width: 300,
-    // height: 300,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     margin: 40,
+    marginTop: 190,
+    marginBottom: 190,
+    borderRadius: 10,
   },
-  modalContent: {},
+  modalViewContainer: {
+    backgroundColor: 'blue',
+  },
+  modalContent: {
+    padding: 10,
+  },
+  modalInput: {
+    margin: 5,
+    marginBottom: 15,
+  },
   modalButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    paddingTop: 20,
   },
   buttonContainer: {
     flexDirection: 'row',
