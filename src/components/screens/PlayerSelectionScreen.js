@@ -2,12 +2,14 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {useGetAllPlayersQuery} from '../../services/players';
 import PlayerCard from '../common/PlayerCard';
+import {useGetPlayerImageQuery} from '../../services/playerImage';
 
 const PlayerSelectionScreen = ({route, navigation}) => {
   const [players, setPlayers] = useState(null);
   const {selectedTeamName, selectedTeamId} = route.params;
   const {data, isLoading, error} = useGetAllPlayersQuery(selectedTeamName);
-
+  // const {playerImageData, imageIsLoading, imageError} =
+  //   useGetPlayerImageQuery();
   // console.log(
   //   'player selection screen teamName: ',
   //   selectedTeamName,
@@ -21,10 +23,15 @@ const PlayerSelectionScreen = ({route, navigation}) => {
   //   console.log('error', error);
   // }
 
+  // console.log('playerImageData', playerImageData);
+
   useEffect(() => {
     if (data && data.league) {
       filterData(data.league);
     }
+    // if (playerImageData) {
+    //   console.log(playerImageData);
+    // }
   }, [data, filterData]);
 
   // TODO: Make common component
