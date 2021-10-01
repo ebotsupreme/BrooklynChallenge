@@ -3,12 +3,16 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import TeamCard from '../common/TeamCard';
 
 const West = ({data, navigation}) => {
-  if (data && data.league) {
-    console.log('data.league.standard WEST: ', data.league.standard);
-  }
+  // if (data && data.league) {
+  //   console.log('data.league.standard WEST: ', data.league.standard);
+  // }
 
   const renderItem = ({item}) => (
-    <TeamCard teamName={item.fullName} navigation={navigation} />
+    <TeamCard
+      teamName={item.fullName}
+      teamId={item.teamId}
+      navigation={navigation}
+    />
   );
 
   return (

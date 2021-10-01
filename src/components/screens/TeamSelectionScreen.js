@@ -28,6 +28,7 @@ const TeamSelectionScreen = ({navigation}) => {
     }
   }, [data]);
 
+  // TODO: Make common component
   const filterData = dataToFilter => {
     const westTeamsFiltered = [];
     const eastTeamsFiltered = [];

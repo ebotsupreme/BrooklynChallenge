@@ -3,13 +3,16 @@ import {Text, StyleSheet, View} from 'react-native';
 import {Card, Paragraph} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const TeamCard = ({teamName, navigation}) => {
-  const [team, setTeam] = useState('');
+const TeamCard = ({teamName, teamId, navigation}) => {
+  // const [team, setTeam] = useState('');
 
   const handleSelectTeam = selectedTeam => {
-    console.log('selectedTeam is: ', selectedTeam);
-    setTeam(selectedTeam);
-    navigation.navigate('Player Selection', {teamName: selectedTeam});
+    console.log('selectedTeam is: ', selectedTeam, ' - with teamID: ', teamId);
+    // setTeam(selectedTeam);
+    navigation.navigate('Player Selection', {
+      selectedTeamName: selectedTeam,
+      selectedTeamId: teamId,
+    });
   };
 
   return (

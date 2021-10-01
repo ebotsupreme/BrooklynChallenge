@@ -56,10 +56,10 @@ const BottomTabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Edit"
+        name="Edit Team"
         component={EditScreen}
         options={{
-          tabBarLabel: 'Edit',
+          tabBarLabel: 'Edit Team',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
