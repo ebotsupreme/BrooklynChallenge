@@ -53,7 +53,11 @@ const PlayerSelectionScreen = ({route, navigation}) => {
   );
 
   const renderItem = ({item}) => (
-    <PlayerCard player={item} navigation={navigation} />
+    <PlayerCard
+      player={item}
+      teamName={selectedTeamName}
+      navigation={navigation}
+    />
   );
 
   return (

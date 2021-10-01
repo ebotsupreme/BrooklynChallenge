@@ -3,7 +3,7 @@ import {Text, StyleSheet, View, Image} from 'react-native';
 import {Card, Paragraph} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const PlayerCard = ({player, navigation}) => {
+const PlayerCard = ({player, teamName, navigation}) => {
   const [playerImage, setPlayerImage] = useState('');
   const [playerId, setPlayerId] = useState('');
 
@@ -27,13 +27,16 @@ const PlayerCard = ({player, navigation}) => {
       selectedPlayer.lastName,
       ' - with personID: ',
       selectedPlayer.personId,
+      ' - teamName: ',
+      teamName,
     );
     //TODO: Navigate to edit teams with paylod OR
     // save player to GLOBAL TEAM STATE
     navigation.navigate('Edit Team', {
       selectedPlayerName: fullName,
       selectedPlayerId: selectedPlayer.personId,
-      selectedPlayerImage: '',
+      selectedPlayerImage: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
+      selectedPlayerTeam: teamName,
     });
   };
 
