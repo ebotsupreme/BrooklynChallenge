@@ -5,9 +5,10 @@ import {TabView, SceneMap} from 'react-native-tab-view';
 import West from './West';
 import East from './East';
 
-const TeamSelectionScreen = ({navigation}) => {
+const TeamSelectionScreen = ({route, navigation}) => {
   const [westTeams, setWestTeams] = useState(null);
   const [eastTeams, setEastTeams] = useState(null);
+  const {customTeamId} = route.params;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'west', title: 'West'},
@@ -21,6 +22,7 @@ const TeamSelectionScreen = ({navigation}) => {
   // } else {
   //   console.log('error', error);
   // }
+  console.log('TeamSelectionScreen customTeamId param ', customTeamId);
 
   useEffect(() => {
     if (data && data.league) {
@@ -49,9 +51,21 @@ const TeamSelectionScreen = ({navigation}) => {
   const renderScene = ({route}) => {
     switch (route.key) {
       case 'west':
-        return <West data={westTeams} navigation={navigation} />;
+        return (
+          <West
+            data={westTeams}
+            customTeamId={customTeamId}
+            navigation={navigation}
+          />
+        );
       case 'east':
-        return <East data={eastTeams} navigation={navigation} />;
+        return (
+          <East
+            data={eastTeams}
+            customTeamId={customTeamId}
+            navigation={navigation}
+          />
+        );
       default:
         return null;
     }

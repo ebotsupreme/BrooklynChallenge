@@ -7,6 +7,7 @@ const EditScreen = ({route, navigation}) => {
     selectedPlayerId,
     selectedPlayerImage,
     selectedPlayerTeam,
+    customTeamId,
   } = route.params;
 
   console.log(
@@ -18,6 +19,8 @@ const EditScreen = ({route, navigation}) => {
     selectedPlayerImage,
     ' ',
     selectedPlayerTeam,
+    ' ',
+    customTeamId,
   );
 
   return (
@@ -25,7 +28,7 @@ const EditScreen = ({route, navigation}) => {
       <Text>Edit Team Screen</Text>
       <Text>
         {selectedPlayerName} {selectedPlayerId} {selectedPlayerImage}{' '}
-        {selectedPlayerTeam}
+        {selectedPlayerTeam} {customTeamId}
       </Text>
     </View>
   );

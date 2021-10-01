@@ -32,6 +32,7 @@ const HomeScreen = ({navigation}) => {
   }, [teamState]);
 
   const handleAddTeam = () => {
+    let customTeamId = '';
     console.log('handleAddTeam pressed');
     console.log('teamName ', teamName);
     console.log('cityName: ', cityName);
@@ -57,6 +58,7 @@ const HomeScreen = ({navigation}) => {
             },
           }),
         );
+        customTeamId = 1;
         break;
       case 1:
         dispatch(
@@ -69,6 +71,7 @@ const HomeScreen = ({navigation}) => {
             },
           }),
         );
+        customTeamId = 2;
         break;
       case 2:
         dispatch(
@@ -81,6 +84,7 @@ const HomeScreen = ({navigation}) => {
             },
           }),
         );
+        customTeamId = 3;
         break;
       default:
         break;
@@ -96,8 +100,10 @@ const HomeScreen = ({navigation}) => {
       teamState.teamThreeIsActive
     ) {
     }
-
-    navigation.navigate('Team Selection');
+    console.log('HomeS custom team id: ', customTeamId);
+    navigation.navigate('Team Selection', {
+      customTeamId,
+    });
 
     // console.log('teamState', teamState);
   };
