@@ -50,15 +50,23 @@ const PlayerSelectionScreen = ({route, navigation}) => {
   );
 
   return (
-    <View style={styles.container}>
-      {players && (
-        <FlatList
-          data={players}
-          renderItem={renderItem}
-          keyExtractor={item => item.personId}
-        />
-      )}
-    </View>
+    <>
+      {error ? (
+        <Text>There was an error.</Text>
+      ) : isLoading ? (
+        <Text>Loading...</Text>
+      ) : data ? (
+        <View style={styles.container}>
+          {players && (
+            <FlatList
+              data={players}
+              renderItem={renderItem}
+              keyExtractor={item => item.personId}
+            />
+          )}
+        </View>
+      ) : null}
+    </>
   );
 };
 

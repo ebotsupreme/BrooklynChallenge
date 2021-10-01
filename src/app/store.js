@@ -8,5 +8,8 @@ export const store = configureStore({
     [playersApi.reducerPath]: playersApi.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(teamsApi.middleware, playersApi.middleware),
+    getDefaultMiddleware({serializableCheck: false}).concat(
+      teamsApi.middleware,
+      playersApi.middleware,
+    ),
 });
