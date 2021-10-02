@@ -18,14 +18,9 @@ const EditScreen = ({route, navigation}) => {
     // jersey,
     // pos,
   } = route.params;
-  const {name, city, id} = teamState.teams[customTeamKey];
+  const {name, city, id} = teamState && teamState.teams[customTeamKey];
 
   useEffect(() => {
-    // console.log('Edit Screen teamState', teamState);
-    // console.log('Edit Screen teamState teams', teamState.teams);
-    // if (teamState.teams.players) {
-    //   console.log('yes ');
-    // }
     console.log('EDIT SCREEN START');
     console.log('customTeamKey ', customTeamKey);
     console.log('teamState ', teamState);
@@ -37,24 +32,9 @@ const EditScreen = ({route, navigation}) => {
     console.log('XXXXXX');
     console.log(name, city, id);
     console.log('EDIT SCREEN END');
-  }, [customTeamKey, teamState]);
-
-  // console.log(
-  //   'Edit Screen: ',
-  //   selectedPlayerName,
-  //   ' ',
-  //   selectedPlayerId,
-  //   ' ',
-  //   selectedPlayerImage,
-  //   ' ',
-  //   selectedPlayerTeam,
-  //   ' ',
-  //   customTeamId,
-  // );
+  }, [city, customTeamKey, id, name, teamState]);
 
   const renderItem = ({item}) => {
-    console.log('!!!!!!! RI item: ', item);
-
     return (
       <PlayerCard
         player={item}
@@ -62,8 +42,6 @@ const EditScreen = ({route, navigation}) => {
         navigation={navigation}
         customTeamId={customTeamId}
         customTeamKey={customTeamKey}
-        // playerNumber={jersey}
-        // position={pos}
         screen={'Edit'}
       />
     );
@@ -77,7 +55,6 @@ const EditScreen = ({route, navigation}) => {
         city={city}
         navigation={navigation}
         screen={'Edit'}
-        // style={{margin: 20}}
       />
       {teamState.error ? (
         <Text>There was an error.</Text>
@@ -94,10 +71,6 @@ const EditScreen = ({route, navigation}) => {
           )}
         </View>
       ) : null}
-      {/* <Text>
-        {selectedPlayerName} {selectedPlayerId} {selectedPlayerImage}{' '}
-        {selectedPlayerTeam} {customTeamId}
-      </Text> */}
     </View>
   );
 };

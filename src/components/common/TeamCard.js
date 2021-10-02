@@ -12,18 +12,7 @@ const TeamCard = ({
   navigation,
   screen = '',
 }) => {
-  // const [team, setTeam] = useState('');
-
   const handleSelectTeam = selectedTeam => {
-    console.log(
-      'selectedTeam is: ',
-      selectedTeam,
-      ' - with teamID: ',
-      teamId,
-      ' - with customTeamID: ',
-      customTeamId,
-    );
-    // setTeam(selectedTeam);
     navigation.navigate('Player Selection', {
       selectedTeamName: selectedTeam,
       selectedTeamId: teamId,

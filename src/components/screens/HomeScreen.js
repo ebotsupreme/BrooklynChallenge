@@ -1,15 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  startLoading,
-  hasError,
-  updateTeamOne,
-  updateTeamTwo,
-  updateTeamThree,
-  addTeam,
-} from '../../features/team/teamSlice';
+import {startLoading, hasError, addTeam} from '../../features/team/teamSlice';
 
 const HomeScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
@@ -18,27 +11,23 @@ const HomeScreen = ({navigation}) => {
   const teamState = useSelector(state => state.team);
   const dispatch = useDispatch();
 
-  let deviceWidth = Dimensions.get('window').width;
-  let deviceHeight = Dimensions.get('window').height;
-  // let modalWidth = deviceWidth / 2;
-  // let modalHeight = deviceHeight / 2;
-
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
-  useEffect(() => {
-    console.log('HOME teamState', teamState);
-    console.log('teamState.teams', teamState.teams);
-    console.log();
-  }, [teamState]);
+  // useEffect(() => {
+  //   console.log('HOME teamState', teamState);
+  //   if (teamState.teams[0]) {
+  //     console.log('teamState.teams[0]', teamState.teams[0]);
+  //   }
+  //   // console.log('teamState.teams.player', teamState.teams.player);
+  //   if (teamState.teams[0]) {
+  //     console.log('teamState.teams.player', teamState.teams[0].player);
+  //   }
+  // }, [teamState]);
 
   const handleAddTeam = () => {
     let customTeamId = '';
     let customTeamKey = '';
-    console.log('handleAddTeam pressed');
-    console.log('teamName ', teamName);
-    console.log('cityName: ', cityName);
-    console.log('teamState', teamState);
 
     if (teamState.teamCount === 3) {
       console.log('three', teamState.teamCount);

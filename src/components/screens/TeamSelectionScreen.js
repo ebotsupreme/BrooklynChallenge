@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Dimensions, StyleSheet, StatusBar} from 'react-native';
 import {useGetAllTeamsQuery} from '../../services/teams';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView} from 'react-native-tab-view';
 import West from './West';
 import East from './East';
 
@@ -16,17 +16,6 @@ const TeamSelectionScreen = ({route, navigation}) => {
   ]);
   const {data, isLoading, error} = useGetAllTeamsQuery();
   const initialLayout = {width: Dimensions.get('window').width};
-
-  // if (data && data.league) {
-  //   console.log('data.league.standard: ', data.league.standard);
-  // } else {
-  //   console.log('error', error);
-  // }
-  console.log(
-    'TeamSelectionScreen customTeamId param ',
-    customTeamId,
-    customTeamKey,
-  );
 
   useEffect(() => {
     if (data && data.league) {
@@ -76,10 +65,6 @@ const TeamSelectionScreen = ({route, navigation}) => {
         return null;
     }
   };
-
-  // console.log('WEST TEAMS: ', westTeams);
-  // console.log('EAST TEAMS: ', eastTeams);
-  // console.log('teamSelectionScreen NAV', navigation);
 
   return (
     <>

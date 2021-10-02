@@ -1,9 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
-import {Card, Paragraph, IconButton, Colors} from 'react-native-paper';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Card, IconButton, Colors} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
-import {startLoading, hasError, addPlayer} from '../../features/team/teamSlice';
+import {
+  startLoading,
+  hasError,
+  addPlayer,
+  removePlayer,
+} from '../../features/team/teamSlice';
 
 const PlayerCard = ({
   player,
@@ -12,11 +16,7 @@ const PlayerCard = ({
   customTeamKey,
   navigation,
   screen = '',
-  // playerNumber = '',
-  // position = '',
 }) => {
-  const [playerImage, setPlayerImage] = useState('');
-  const [playerId, setPlayerId] = useState('');
   const teamState = useSelector(state => state.team);
   const dispatch = useDispatch();
   const {
@@ -35,28 +35,8 @@ const PlayerCard = ({
     position,
   } = player;
 
-  // useEffect(() => {
-  //   console.log('Player Card teamState', teamState);
-  //   console.log('PC teamState.teams', teamState.teams);
-  //   console.log('PC teamState players', teamState.teams.players);
-  // }, [teamState]);
-
   const handleSelectPlayer = selectedPlayer => {
     const fullName = `${selectedPlayer.firstName} ${selectedPlayer.lastName}`;
-    // console.log(
-    //   'selectedPlayer is: ',
-    //   selectedPlayer.firstName,
-    //   ' ',
-    //   selectedPlayer.lastName,
-    //   ' - with personID: ',
-    //   selectedPlayer.personId,
-    //   ' - teamName: ',
-    //   teamName,
-    //   ' - customTeamId: ',
-    //   customTeamId,
-    //   ' - customTeamKey: ',
-    //   customTeamKey,
-    // );
     //TODO: Navigate to edit teams with paylod OR
     // save player to GLOBAL TEAM STATE
     // navigation.navigate('Edit Team', {
@@ -74,27 +54,38 @@ const PlayerCard = ({
         name: fullName,
         image: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
         nbaTeam: teamName,
-        customTeamId: customTeamId,
-        customTeamKey: customTeamKey,
-        jersey: jersey,
+        customTeamId,
+        customTeamKey,
+        jersey,
         position: pos,
       }),
     );
     navigation.navigate('Edit Team', {
-      customTeamId: customTeamId,
-      customTeamKey: customTeamKey,
-      // jersey: jersey,
-      // pos: pos,
+      customTeamId,
+      customTeamKey,
     });
   };
 
   const handleRemovePlayer = () => {
-    console.log('handleRemovePlayer - id, name: ', id, name);
+    console.log(
+      'handleRemovePlayer - customTeamId, playerId, playerName: ',
+      customTeamId,
+      id,
+      name,
+    );
+    dispatch(
+      removePlayer({
+        id,
+        name,
+        customTeamId,
+        customTeamKey,
+      }),
+    );
   };
 
   return (
     <>
-      {screen === 'Edit' ? (
+      {screen === 'Edit' && teamState ? (
         <Card style={styles.container}>
           <View style={styles.viewContainer}>
             <View style={styles.imageContainer}>
