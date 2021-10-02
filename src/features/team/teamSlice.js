@@ -124,9 +124,27 @@ export const teamSlice = createSlice({
       state.isLoading = false;
       state.isLoaded = true;
     },
-    // teamSuccess: (state, action) => {
-    //   state.
-    // },
+    addPlayer: (state, action) => {
+      console.log(
+        'action.payload',
+        action.payload,
+        ' state.teams.players ',
+        state.teams.players,
+      );
+      console.log('state.teams ', state.teams);
+      console.log('action.payload.customTeamKey', action.payload.customTeamKey);
+      console.log(
+        'state.teams[action.payload.customTeamKey]',
+        state.teams[action.payload.customTeamKey],
+      );
+      console.log('state.teams[0] ', state.teams[0]);
+      console.log('state.teams[0].players ', state.teams[0].players);
+      state.teams[action.payload.customTeamKey].players = [
+        ...state.teams[action.payload.customTeamKey].players,
+        action.payload,
+      ];
+      state.isLoading = false;
+    },
   },
 });
 
@@ -137,6 +155,7 @@ export const {
   updateTeamTwo,
   updateTeamThree,
   addTeam,
+  addPlayer,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

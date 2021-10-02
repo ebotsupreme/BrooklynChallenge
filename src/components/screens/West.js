@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import TeamCard from '../common/TeamCard';
 
-const West = ({data, customTeamId, navigation}) => {
+const West = ({data, customTeamId, customTeamKey, navigation}) => {
   // if (data && data.league) {
   //   console.log('data.league.standard WEST: ', data.league.standard);
   // }
@@ -13,6 +13,7 @@ const West = ({data, customTeamId, navigation}) => {
       teamId={item.teamId}
       navigation={navigation}
       customTeamId={customTeamId}
+      customTeamKey={customTeamKey}
     />
   );
 

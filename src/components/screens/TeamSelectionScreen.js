@@ -8,7 +8,7 @@ import East from './East';
 const TeamSelectionScreen = ({route, navigation}) => {
   const [westTeams, setWestTeams] = useState(null);
   const [eastTeams, setEastTeams] = useState(null);
-  const {customTeamId} = route.params;
+  const {customTeamId, customTeamKey} = route.params;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'west', title: 'West'},
@@ -22,7 +22,11 @@ const TeamSelectionScreen = ({route, navigation}) => {
   // } else {
   //   console.log('error', error);
   // }
-  console.log('TeamSelectionScreen customTeamId param ', customTeamId);
+  console.log(
+    'TeamSelectionScreen customTeamId param ',
+    customTeamId,
+    customTeamKey,
+  );
 
   useEffect(() => {
     if (data && data.league) {
@@ -55,6 +59,7 @@ const TeamSelectionScreen = ({route, navigation}) => {
           <West
             data={westTeams}
             customTeamId={customTeamId}
+            customTeamKey={customTeamKey}
             navigation={navigation}
           />
         );
@@ -63,6 +68,7 @@ const TeamSelectionScreen = ({route, navigation}) => {
           <East
             data={eastTeams}
             customTeamId={customTeamId}
+            customTeamKey={customTeamKey}
             navigation={navigation}
           />
         );

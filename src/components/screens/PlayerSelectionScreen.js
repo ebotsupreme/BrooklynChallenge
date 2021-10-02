@@ -6,7 +6,8 @@ import {useGetPlayerImageQuery} from '../../services/playerImage';
 
 const PlayerSelectionScreen = ({route, navigation}) => {
   const [players, setPlayers] = useState(null);
-  const {selectedTeamName, selectedTeamId, customTeamId} = route.params;
+  const {selectedTeamName, selectedTeamId, customTeamId, customTeamKey} =
+    route.params;
   const {data, isLoading, error} = useGetAllPlayersQuery(selectedTeamName);
   // const {playerImageData, imageIsLoading, imageError} =
   //   useGetPlayerImageQuery();
@@ -58,6 +59,7 @@ const PlayerSelectionScreen = ({route, navigation}) => {
       teamName={selectedTeamName}
       navigation={navigation}
       customTeamId={customTeamId}
+      customTeamKey={customTeamKey}
     />
   );
 

@@ -2,11 +2,20 @@ import React, {useState, useEffect} from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
 import {Card, Paragraph} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useSelector, useDispatch} from 'react-redux';
+import {startLoading, hasError, addPlayer} from '../../features/team/teamSlice';
 
-const PlayerCard = ({player, teamName, customTeamId, navigation}) => {
+const PlayerCard = ({
+  player,
+  teamName,
+  customTeamId,
+  customTeamKey,
+  navigation,
+}) => {
   const [playerImage, setPlayerImage] = useState('');
   const [playerId, setPlayerId] = useState('');
-
+  const teamState = useSelector(state => state.team);
+  const dispatch = useDispatch();
   const {
     firstName,
     lastName,
@@ -18,31 +27,52 @@ const PlayerCard = ({player, teamName, customTeamId, navigation}) => {
     nbaDebutYear,
   } = player;
 
+  // useEffect(() => {
+  //   console.log('Player Card teamState', teamState);
+  //   console.log('PC teamState.teams', teamState.teams);
+  //   console.log('PC teamState players', teamState.teams.players);
+  // }, [teamState]);
+
   const handleSelectPlayer = selectedPlayer => {
     const fullName = `${selectedPlayer.firstName} ${selectedPlayer.lastName}`;
-    console.log(
-      'selectedPlayer is: ',
-      selectedPlayer.firstName,
-      ' ',
-      selectedPlayer.lastName,
-      ' - with personID: ',
-      selectedPlayer.personId,
-      ' - teamName: ',
-      teamName,
-      ' - customTeamId: ',
-      customTeamId,
-    );
+    // console.log(
+    //   'selectedPlayer is: ',
+    //   selectedPlayer.firstName,
+    //   ' ',
+    //   selectedPlayer.lastName,
+    //   ' - with personID: ',
+    //   selectedPlayer.personId,
+    //   ' - teamName: ',
+    //   teamName,
+    //   ' - customTeamId: ',
+    //   customTeamId,
+    //   ' - customTeamKey: ',
+    //   customTeamKey,
+    // );
     //TODO: Navigate to edit teams with paylod OR
     // save player to GLOBAL TEAM STATE
-    navigation.navigate('Edit Team', {
-      selectedPlayerName: fullName,
-      selectedPlayerId: selectedPlayer.personId,
-      selectedPlayerImage: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
-      selectedPlayerTeam: teamName,
-      customTeamId: customTeamId,
-    });
+    // navigation.navigate('Edit Team', {
+    //   selectedPlayerName: fullName,
+    //   selectedPlayerId: personId,
+    //   selectedPlayerImage: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
+    //   selectedPlayerTeam: teamName,
+    //   customTeamId,
+    // });
 
     // OR save player here to state
+    dispatch(
+      addPlayer({
+        id: personId,
+        name: fullName,
+        image: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
+        nbaTeam: teamName,
+        customTeamId: customTeamId,
+        customTeamKey: customTeamKey,
+      }),
+    );
+    navigation.navigate('Edit Team', {
+      customTeamKey: customTeamKey,
+    });
   };
 
   return (

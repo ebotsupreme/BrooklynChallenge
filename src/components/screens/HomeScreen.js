@@ -27,12 +27,13 @@ const HomeScreen = ({navigation}) => {
   const hideModal = () => setVisible(false);
 
   useEffect(() => {
-    console.log('teamState', teamState);
+    console.log('HOME teamState', teamState);
     console.log('teamState.teams', teamState.teams);
   }, [teamState]);
 
   const handleAddTeam = () => {
     let customTeamId = '';
+    let customTeamKey = '';
     console.log('handleAddTeam pressed');
     console.log('teamName ', teamName);
     console.log('cityName: ', cityName);
@@ -50,41 +51,41 @@ const HomeScreen = ({navigation}) => {
       case 0:
         dispatch(
           addTeam({
-            teamOne: {
-              id: 1,
-              name: teamName,
-              city: cityName,
-              players: [],
-            },
+            key: 0,
+            id: 1,
+            name: teamName,
+            city: cityName,
+            players: [],
           }),
         );
         customTeamId = 1;
+        customTeamKey = 0;
         break;
       case 1:
         dispatch(
           addTeam({
-            teamTwo: {
-              id: 2,
-              name: teamName,
-              city: cityName,
-              players: [],
-            },
+            key: 1,
+            id: 2,
+            name: teamName,
+            city: cityName,
+            players: [],
           }),
         );
         customTeamId = 2;
+        customTeamKey = 1;
         break;
       case 2:
         dispatch(
           addTeam({
-            teamThree: {
-              id: 3,
-              name: teamName,
-              city: cityName,
-              players: [],
-            },
+            key: 2,
+            id: 3,
+            name: teamName,
+            city: cityName,
+            players: [],
           }),
         );
         customTeamId = 3;
+        customTeamKey = 2;
         break;
       default:
         break;
@@ -103,6 +104,7 @@ const HomeScreen = ({navigation}) => {
     console.log('HomeS custom team id: ', customTeamId);
     navigation.navigate('Team Selection', {
       customTeamId,
+      customTeamKey,
     });
 
     // console.log('teamState', teamState);
