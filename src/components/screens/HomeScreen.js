@@ -120,6 +120,7 @@ const HomeScreen = ({navigation}) => {
             style={styles.modalContainer}
             contentContainerStyle={styles.modalContent}>
             <View>
+              {/* TODO: Add validation - no empty strings, max char */}
               <TextInput
                 label="Team Name"
                 value={teamName}

@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {startLoading, hasError} from '../../features/team/teamSlice';
+import TeamCard from '../common/TeamCard';
 
 const EditScreen = ({route, navigation}) => {
   const teamState = useSelector(state => state.team);
@@ -14,6 +15,7 @@ const EditScreen = ({route, navigation}) => {
     // customTeamId,
     customTeamKey,
   } = route.params;
+  const {name, city, id} = teamState.teams[customTeamKey];
 
   useEffect(() => {
     // console.log('Edit Screen teamState', teamState);
@@ -41,8 +43,14 @@ const EditScreen = ({route, navigation}) => {
   // );
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Edit Team Screen</Text>
+    <View style={styles.container}>
+      <TeamCard
+        teamName={name}
+        teamId={id}
+        city={city}
+        navigation={navigation}
+        screen={'Edit'}
+      />
       {/* <Text>
         {selectedPlayerName} {selectedPlayerId} {selectedPlayerImage}{' '}
         {selectedPlayerTeam} {customTeamId}
@@ -50,5 +58,12 @@ const EditScreen = ({route, navigation}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 20,
+  },
+});
 
 export default EditScreen;

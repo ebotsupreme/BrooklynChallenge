@@ -6,9 +6,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const TeamCard = ({
   teamName,
   teamId,
-  customTeamId,
-  customTeamKey,
+  city = '',
+  customTeamId = '',
+  customTeamKey = '',
   navigation,
+  screen = '',
 }) => {
   // const [team, setTeam] = useState('');
 
@@ -31,12 +33,25 @@ const TeamCard = ({
   };
 
   return (
-    <Card style={styles.container} onPress={() => handleSelectTeam(teamName)}>
-      <View style={styles.viewContainer}>
-        <Text>{teamName}</Text>
-        <MaterialIcons name="add" />
-      </View>
-    </Card>
+    <>
+      {screen === 'Edit' ? (
+        <Card style={styles.container}>
+          <View style={styles.viewEditTeamContainer}>
+            <Text style={styles.editTeamName}>{teamName}</Text>
+            <Text style={styles.editTeamCity}>{city}</Text>
+          </View>
+        </Card>
+      ) : (
+        <Card
+          style={styles.container}
+          onPress={() => handleSelectTeam(teamName)}>
+          <View style={styles.viewContainer}>
+            <Text>{teamName}</Text>
+            <MaterialIcons name="add" />
+          </View>
+        </Card>
+      )}
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -48,6 +63,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  viewEditTeamContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  editTeamName: {
+    fontSize: 25,
+    padding: 10,
+  },
+  editTeamCity: {
+    fontSize: 16,
+    padding: 10,
   },
 });
 
