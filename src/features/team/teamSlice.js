@@ -106,24 +106,6 @@ export const teamSlice = createSlice({
       // state.activeTeams = [...state.activeTeams, `team${state.teamCount += 1}isActive`]
       state.isLoading = false;
     },
-    updateTeamOne: (state, action) => {
-      state.teams[0].teamOne = action.payload;
-      state.teamOneIsActive = true;
-      state.isLoading = false;
-      state.isLoaded = true;
-    },
-    updateTeamTwo: (state, action) => {
-      state.teams[1].teamTwo = action.payload;
-      state.teamOneIsActive = true;
-      state.isLoading = false;
-      state.isLoaded = true;
-    },
-    updateTeamThree: (state, action) => {
-      state.teams[2].teamThree = action.payload;
-      state.teamOneIsActive = true;
-      state.isLoading = false;
-      state.isLoaded = true;
-    },
     addPlayer: (state, action) => {
       state.teams[action.payload.customTeamKey].players = [
         ...state.teams[action.payload.customTeamKey].players,
@@ -131,6 +113,27 @@ export const teamSlice = createSlice({
       ];
       state.isLoading = false;
     },
+    currentState: (state, action) => {
+      return state.teams;
+    },
+    // updateTeamOne: (state, action) => {
+    //   state.teams[0].teamOne = action.payload;
+    //   state.teamOneIsActive = true;
+    //   state.isLoading = false;
+    //   state.isLoaded = true;
+    // },
+    // updateTeamTwo: (state, action) => {
+    //   state.teams[1].teamTwo = action.payload;
+    //   state.teamOneIsActive = true;
+    //   state.isLoading = false;
+    //   state.isLoaded = true;
+    // },
+    // updateTeamThree: (state, action) => {
+    //   state.teams[2].teamThree = action.payload;
+    //   state.teamOneIsActive = true;
+    //   state.isLoading = false;
+    //   state.isLoaded = true;
+    // },
   },
 });
 
@@ -142,6 +145,7 @@ export const {
   updateTeamThree,
   addTeam,
   addPlayer,
+  currentState,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

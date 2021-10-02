@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, StyleSheet, View, Image} from 'react-native';
-import {Card, Paragraph} from 'react-native-paper';
+import {Card, Paragraph, IconButton, Colors} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
 import {startLoading, hasError, addPlayer} from '../../features/team/teamSlice';
@@ -11,6 +11,9 @@ const PlayerCard = ({
   customTeamId,
   customTeamKey,
   navigation,
+  screen = '',
+  // playerNumber = '',
+  // position = '',
 }) => {
   const [playerImage, setPlayerImage] = useState('');
   const [playerId, setPlayerId] = useState('');
@@ -25,6 +28,11 @@ const PlayerCard = ({
     jersey,
     pos,
     nbaDebutYear,
+    id,
+    image,
+    name,
+    nbaTeam,
+    position,
   } = player;
 
   // useEffect(() => {
@@ -68,49 +76,102 @@ const PlayerCard = ({
         nbaTeam: teamName,
         customTeamId: customTeamId,
         customTeamKey: customTeamKey,
+        jersey: jersey,
+        position: pos,
       }),
     );
     navigation.navigate('Edit Team', {
+      customTeamId: customTeamId,
       customTeamKey: customTeamKey,
+      // jersey: jersey,
+      // pos: pos,
     });
   };
 
+  const handleRemovePlayer = () => {
+    console.log('handleRemovePlayer - id, name: ', id, name);
+  };
+
   return (
-    <Card style={styles.container} onPress={() => handleSelectPlayer(player)}>
-      <View style={styles.viewContainer}>
-        <View style={styles.imageContainer}>
-          {/* TODO: uri will need to be env variable along with query calls in all reducers */}
-          <Image
-            source={{
-              uri: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
-            }}
-            style={{width: 200, height: 200}}
-          />
-          <View style={styles.jersyContainer}>
-            <Text style={styles.jersey}>{jersey}</Text>
+    <>
+      {screen === 'Edit' ? (
+        <Card style={styles.container}>
+          <View style={styles.viewContainer}>
+            <View style={styles.imageContainer}>
+              {/* TODO: uri will need to be env variable along with query calls in all reducers */}
+              <Image
+                source={{
+                  uri: image,
+                }}
+                style={{width: 100, height: 100}}
+              />
+              <View style={styles.jersyContainerEditMode}>
+                <Text style={styles.jerseyEditMode}>{jersey}</Text>
+              </View>
+            </View>
+            <View
+              style={[
+                styles.infoContainer,
+                {paddingVertical: 5, paddingHorizontal: 0},
+              ]}>
+              <Text style={styles.nameEditMode}>{name}</Text>
+              <View style={styles.bottomEditMode}>
+                <Text style={styles.titleStat}>
+                  <Text style={styles.statName}>Position:</Text> {position}
+                </Text>
+                <Text style={styles.titleStat}>{nbaTeam}</Text>
+              </View>
+              <View style={styles.removePlayerButtonContainer}>
+                <IconButton
+                  icon="account-remove"
+                  color={Colors.red500}
+                  size={26}
+                  onPress={handleRemovePlayer}
+                />
+              </View>
+            </View>
           </View>
-        </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.name}>
-            {firstName} {lastName}
-          </Text>
-          <View style={styles.bottom}>
-            <Text style={styles.titleStat}>
-              <Text style={styles.statName}>Height:</Text>{' '}
-              <Text style={styles.titleStat}>
-                {heightFeet}ft. {heightInches}"
+        </Card>
+      ) : (
+        <Card
+          style={styles.container}
+          onPress={() => handleSelectPlayer(player)}>
+          <View style={styles.viewContainer}>
+            <View style={styles.imageContainer}>
+              {/* TODO: uri will need to be env variable along with query calls in all reducers */}
+              <Image
+                source={{
+                  uri: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
+                }}
+                style={{width: 200, height: 200}}
+              />
+              <View style={styles.jersyContainer}>
+                <Text style={styles.jersey}>{jersey}</Text>
+              </View>
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.name}>
+                {firstName} {lastName}
               </Text>
-            </Text>
-            <Text style={styles.titleStat}>
-              <Text style={styles.statName}>Position:</Text> {pos}
-            </Text>
-            <Text style={styles.titleStat}>
-              <Text style={styles.statName}>Class of:</Text> {nbaDebutYear}
-            </Text>
+              <View style={styles.bottom}>
+                <Text style={styles.titleStat}>
+                  <Text style={styles.statName}>Height:</Text>{' '}
+                  <Text style={styles.titleStat}>
+                    {heightFeet}ft. {heightInches}"
+                  </Text>
+                </Text>
+                <Text style={styles.titleStat}>
+                  <Text style={styles.statName}>Position:</Text> {pos}
+                </Text>
+                <Text style={styles.titleStat}>
+                  <Text style={styles.statName}>Class of:</Text> {nbaDebutYear}
+                </Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-    </Card>
+        </Card>
+      )}
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -166,6 +227,48 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     marginBottom: 15,
+  },
+  nameEditMode: {
+    fontSize: 20,
+    fontWeight: '800',
+    marginTop: 5,
+    // backgroundColor: 'green',
+    paddingHorizontal: 15,
+  },
+  bottomEditMode: {
+    justifyContent: 'flex-end',
+    marginBottom: 5,
+    position: 'absolute',
+    bottom: 0,
+    paddingVertical: 5,
+    // backgroundColor: 'green',
+    paddingHorizontal: 15,
+  },
+  jersyContainerEditMode: {
+    position: 'absolute',
+    top: 5,
+    left: 4,
+    right: 0,
+    bottom: 0,
+    alignItems: 'flex-start',
+  },
+  jerseyEditMode: {
+    fontSize: 18,
+    fontWeight: '600',
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 10,
+    width: 22,
+    padding: 2,
+    textAlign: 'center',
+  },
+  removePlayerButtonContainer: {
+    position: 'absolute',
+    top: -4,
+    left: 0,
+    right: 5,
+    bottom: 0,
+    alignItems: 'flex-end',
   },
 });
 

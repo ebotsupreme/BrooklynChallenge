@@ -20,8 +20,8 @@ const HomeScreen = ({navigation}) => {
 
   let deviceWidth = Dimensions.get('window').width;
   let deviceHeight = Dimensions.get('window').height;
-  let modalWidth = deviceWidth / 2;
-  let modalHeight = deviceHeight / 2;
+  // let modalWidth = deviceWidth / 2;
+  // let modalHeight = deviceHeight / 2;
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -29,6 +29,7 @@ const HomeScreen = ({navigation}) => {
   useEffect(() => {
     console.log('HOME teamState', teamState);
     console.log('teamState.teams', teamState.teams);
+    console.log();
   }, [teamState]);
 
   const handleAddTeam = () => {
@@ -41,6 +42,7 @@ const HomeScreen = ({navigation}) => {
 
     if (teamState.teamCount === 3) {
       console.log('three', teamState.teamCount);
+      // TODO: modal is still open here. need to resolve.
       return;
     }
 
@@ -95,13 +97,13 @@ const HomeScreen = ({navigation}) => {
       console.log('zero', teamState.teamCount);
     }
 
-    if (
-      teamState.teamOnIsActive ||
-      teamState.teamTwoIsActive ||
-      teamState.teamThreeIsActive
-    ) {
-    }
-    console.log('HomeS custom team id: ', customTeamId);
+    // if (
+    //   teamState.teamOnIsActive ||
+    //   teamState.teamTwoIsActive ||
+    //   teamState.teamThreeIsActive
+    // ) {
+    // }
+    // console.log('HomeS custom team id: ', customTeamId);
     navigation.navigate('Team Selection', {
       customTeamId,
       customTeamKey,
