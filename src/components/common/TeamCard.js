@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   editTeamName: {
-    fontSize: 25,
+    fontSize: 30,
     padding: 10,
   },
   editTeamCity: {

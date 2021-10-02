@@ -145,6 +145,7 @@ const HomeScreen = ({navigation}) => {
         </Portal>
 
         <View style={styles.buttonContainer}>
+          {/* TODO: Could be resuable component - also used in Edit Screen */}
           <Button
             style={styles.newTeam}
             icon="account-group"

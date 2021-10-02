@@ -255,11 +255,12 @@ const styles = StyleSheet.create({
   },
   removePlayerButtonContainer: {
     position: 'absolute',
-    top: -4,
+    top: 52,
     left: 0,
-    right: 5,
+    right: 2,
     bottom: 0,
     alignItems: 'flex-end',
+    // backgroundColor: 'grey',
   },
 });
 
