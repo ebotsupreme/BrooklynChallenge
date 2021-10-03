@@ -43,6 +43,12 @@ export const teamSlice = createSlice({
       ].players.filter(player => player.id !== action.payload.id);
       state.isLoading = false;
     },
+    removeAllPlayers: (state, action) => {
+      console.log('removeAllPlayers action.payload ', action.payload);
+      state.teams[action.payload.customTeamKey].players =
+        action.payload.players;
+      state.isLoading = false;
+    },
   },
 });
 
@@ -55,6 +61,7 @@ export const {
   addTeam,
   addPlayer,
   removePlayer,
+  removeAllPlayers,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

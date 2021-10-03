@@ -1,25 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {removeAllPlayers} from '../../features/team/teamSlice';
 import {Button} from 'react-native-paper';
-import {startLoading, hasError} from '../../features/team/teamSlice';
 import TeamCard from '../common/TeamCard';
 import PlayerCard from '../common/PlayerCard';
 
 const EditScreen = ({route, navigation}) => {
+  const [isAddPlayerButtonDisabled, setIsAddPlayerButtonDisabled] =
+    useState(false);
   const teamState = useSelector(state => state.team);
-  const dispatch = useDispatch();
-  const {
-    // selectedPlayerName,
-    // selectedPlayerId,
-    // selectedPlayerImage,
-    // selectedPlayerTeam,
-    customTeamId,
-    customTeamKey,
-    // jersey,
-    // pos,
-  } = route.params;
+  const {customTeamId, customTeamKey} = route.params;
   const {name, city, id} = teamState && teamState.teams[customTeamKey];
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log('EDIT SCREEN START');
@@ -33,7 +26,46 @@ const EditScreen = ({route, navigation}) => {
     console.log('XXXXXX');
     console.log(name, city, id);
     console.log('EDIT SCREEN END');
-  }, [city, customTeamKey, id, name, teamState]);
+    getPlayerCount();
+  }, [city, customTeamKey, getPlayerCount, id, name, teamState]);
+
+  const handleAddPlayer = () => {
+    navigation.navigate('Team Selection', {
+      customTeamId,
+      customTeamKey,
+    });
+  };
+
+  const getPlayerCount = useCallback(() => {
+    console.log('getPlayerCount ', teamState);
+    if (teamState.teams) {
+      console.log(
+        'PLAYER COUNT  ',
+        teamState.teams[customTeamKey].players.length,
+      );
+      let playerCount = teamState.teams[customTeamKey].players.length;
+      playerCount === 5
+        ? setIsAddPlayerButtonDisabled(true)
+        : setIsAddPlayerButtonDisabled(false);
+      // if (playerCount === 5) {
+      //   // disable add player button
+      //   setIsAddPlayerButtonActive(false);
+      // } else {
+      //   setIsAddPlayerButtonActive(true);
+      // }
+    }
+  }, [customTeamKey, teamState]);
+
+  const handleClearAll = () => {
+    console.log('Clear all');
+    dispatch(
+      removeAllPlayers({
+        players: [],
+        customTeamId,
+        customTeamKey,
+      }),
+    );
+  };
 
   const renderItem = ({item}) => {
     return (
@@ -60,11 +92,15 @@ const EditScreen = ({route, navigation}) => {
       <View style={styles.buttonContainer}>
         {/* TODO: Could be resuable component - also used in Edit Screen */}
         <Button
-          style={styles.newTeam}
+          style={[
+            styles.newTeam,
+            isAddPlayerButtonDisabled && {backgroundColor: '#D3D3D3'},
+          ]}
           labelStyle={{fontSize: 14}}
           icon="account"
           mode="contained"
-          onPress={() => console.log('add player Pressed')}>
+          onPress={handleAddPlayer}
+          disabled={isAddPlayerButtonDisabled}>
           Add Player
         </Button>
         <Button
@@ -72,7 +108,7 @@ const EditScreen = ({route, navigation}) => {
           labelStyle={{fontSize: 14}}
           icon="axe"
           mode="contained"
-          onPress={() => console.log('clear all Pressed')}>
+          onPress={handleClearAll}>
           Clear All
         </Button>
       </View>
@@ -81,12 +117,13 @@ const EditScreen = ({route, navigation}) => {
       ) : teamState.isLoading ? (
         <Text>Loading...</Text>
       ) : teamState ? (
-        <View>
+        <View style={{flex: 1}}>
           {teamState.teams[customTeamKey] && (
             <FlatList
               data={teamState && teamState.teams[customTeamKey].players}
               renderItem={renderItem}
               keyExtractor={item => item.id}
+              contentContainerStyle={{paddingVertical: 10}}
             />
           )}
         </View>

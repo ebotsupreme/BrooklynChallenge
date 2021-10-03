@@ -110,7 +110,9 @@ const PlayerCard = ({
                 <Text style={styles.titleStat}>
                   <Text style={styles.statName}>Position:</Text> {position}
                 </Text>
-                <Text style={styles.titleStat}>{nbaTeam}</Text>
+                <Text style={[styles.titleStat, {fontSize: 14}]}>
+                  {nbaTeam}
+                </Text>
               </View>
               <View style={styles.removePlayerButtonContainer}>
                 <IconButton
