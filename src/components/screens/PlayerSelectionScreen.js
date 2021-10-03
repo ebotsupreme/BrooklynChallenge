@@ -1,38 +1,28 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
 import {useGetAllPlayersQuery} from '../../services/players';
 import PlayerCard from '../common/PlayerCard';
-import {useGetPlayerImageQuery} from '../../services/playerImage';
+// import {useGetPlayerImageQuery} from '../../services/playerImage';
 
 const PlayerSelectionScreen = ({route, navigation}) => {
   const [players, setPlayers] = useState(null);
-  const {selectedTeamName, selectedTeamId} = route.params;
+  const {selectedTeamName, selectedTeamId, customTeamId, customTeamKey} =
+    route.params;
   const {data, isLoading, error} = useGetAllPlayersQuery(selectedTeamName);
-  // const {playerImageData, imageIsLoading, imageError} =
-  //   useGetPlayerImageQuery();
-  // console.log(
-  //   'player selection screen teamName: ',
-  //   selectedTeamName,
-  //   ' teamID: ',
-  //   selectedTeamId,
-  // );
-  // if (data && data.league) {
-  //   // console.log('data.league.standard: ', data.league.standard);
-  //   console.log('player list: ', players);
-  // } else {
-  //   console.log('error', error);
-  // }
-
-  // console.log('playerImageData', playerImageData);
+  const teamState = useSelector(state => state.team);
 
   useEffect(() => {
     if (data && data.league) {
       filterData(data.league);
     }
-    // if (playerImageData) {
-    //   console.log(playerImageData);
-    // }
-  }, [data, filterData]);
+
+    console.log('PLAYER SELECTION SCREEN TEAMSTATE TEAM', teamState.teams);
+    console.log(
+      'PLAYER SELECTION SCREEN TEAMSTATE PLAYERS',
+      teamState.teams[0].players,
+    );
+  }, [data, filterData, teamState]);
 
   // TODO: Make common component
   const filterData = useCallback(
@@ -53,7 +43,13 @@ const PlayerSelectionScreen = ({route, navigation}) => {
   );
 
   const renderItem = ({item}) => (
-    <PlayerCard player={item} navigation={navigation} />
+    <PlayerCard
+      player={item}
+      teamName={selectedTeamName}
+      navigation={navigation}
+      customTeamId={customTeamId}
+      customTeamKey={customTeamKey}
+    />
   );
 
   return (

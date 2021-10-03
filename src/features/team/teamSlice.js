@@ -9,83 +9,8 @@ const initialState = {
   teamOneIsActive: false,
   teamTwoIsActive: false,
   teamThreeIsActive: false,
-  // teamOne: {
-  //   id: '',
-  //   name: '',
-  //   city: '',
-  //   players: [],
-  // },
-  // teamTwo: {
-  //   id: '',
-  //   name: '',
-  //   city: '',
-  //   players: [],
-  // },
-  // teamThree: {
-  //   id: '',
-  //   name: '',
-  //   city: '',
-  //   players: [],
-  // },
-  teams: [
-    // {
-    //   teamOne: {
-    //     id: '',
-    //     name: '',
-    //     city: '',
-    //     players: [],
-    //   },
-    // },
-    // {
-    //   teamTwo: {
-    //     id: '',
-    //     name: '',
-    //     city: '',
-    //     players: [],
-    //   },
-    // },
-    // {
-    //   teamThree: {
-    //     id: '',
-    //     name: '',
-    //     city: '',
-    //     players: [],
-    //   },
-    // },
-  ],
+  teams: [],
 };
-
-/*
-players: [
-          {
-            playerOne: {
-              id: '',
-              name: '',
-              image: '',
-            },
-            playerTwo: {
-              id: '',
-              name: '',
-              image: '',
-            },
-            playerThree: {
-              id: '',
-              name: '',
-              image: '',
-            },
-            playerFour: {
-              id: '',
-              name: '',
-              image: '',
-            },
-            playerFive: {
-              id: '',
-              name: '',
-              image: '',
-            },
-          },
-        ],
-*/
 
 export const teamSlice = createSlice({
   name: 'team',
@@ -103,30 +28,26 @@ export const teamSlice = createSlice({
     addTeam: (state, action) => {
       state.teams = [...state.teams, action.payload];
       state.teamCount += 1;
-      // state.activeTeams = [...state.activeTeams, `team${state.teamCount += 1}isActive`]
       state.isLoading = false;
     },
-    updateTeamOne: (state, action) => {
-      state.teams[0].teamOne = action.payload;
-      state.teamOneIsActive = true;
+    addPlayer: (state, action) => {
+      state.teams[action.payload.customTeamKey].players = [
+        ...state.teams[action.payload.customTeamKey].players,
+        action.payload,
+      ];
       state.isLoading = false;
-      state.isLoaded = true;
     },
-    updateTeamTwo: (state, action) => {
-      state.teams[1].teamTwo = action.payload;
-      state.teamOneIsActive = true;
+    removePlayer: (state, action) => {
+      state.teams[action.payload.customTeamKey].players = state.teams[
+        action.payload.customTeamKey
+      ].players.filter(player => player.id !== action.payload.id);
       state.isLoading = false;
-      state.isLoaded = true;
     },
-    updateTeamThree: (state, action) => {
-      state.teams[2].teamThree = action.payload;
-      state.teamOneIsActive = true;
+    removeAllPlayers: (state, action) => {
+      state.teams[action.payload.customTeamKey].players =
+        action.payload.players;
       state.isLoading = false;
-      state.isLoaded = true;
     },
-    // teamSuccess: (state, action) => {
-    //   state.
-    // },
   },
 });
 
@@ -137,6 +58,9 @@ export const {
   updateTeamTwo,
   updateTeamThree,
   addTeam,
+  addPlayer,
+  removePlayer,
+  removeAllPlayers,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;
