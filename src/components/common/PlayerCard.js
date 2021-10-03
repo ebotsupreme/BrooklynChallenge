@@ -17,6 +17,7 @@ const PlayerCard = ({
   navigation,
   screen = '',
 }) => {
+  const [isImageFailed, setIsImageFailed] = useState(false);
   const teamState = useSelector(state => state.team);
   const dispatch = useDispatch();
   const {
@@ -83,6 +84,10 @@ const PlayerCard = ({
     );
   };
 
+  const onErrorLoadingImage = () => {
+    setIsImageFailed(true);
+  };
+
   return (
     <>
       {screen === 'Edit' && teamState ? (
@@ -90,12 +95,18 @@ const PlayerCard = ({
           <View style={styles.viewContainer}>
             <View style={styles.imageContainer}>
               {/* TODO: uri will need to be env variable along with query calls in all reducers */}
-              <Image
-                source={{
-                  uri: image,
-                }}
-                style={{width: 100, height: 100}}
-              />
+              {!isImageFailed ? (
+                <Image
+                  source={{
+                    uri: image,
+                  }}
+                  style={{width: 100, height: 100}}
+                  onError={onErrorLoadingImage}
+                />
+              ) : (
+                <Text>No Image Available</Text>
+              )}
+
               <View style={styles.jersyContainerEditMode}>
                 <Text style={styles.jerseyEditMode}>{jersey}</Text>
               </View>

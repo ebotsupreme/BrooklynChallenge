@@ -44,7 +44,6 @@ export const teamSlice = createSlice({
       state.isLoading = false;
     },
     removeAllPlayers: (state, action) => {
-      console.log('removeAllPlayers action.payload ', action.payload);
       state.teams[action.payload.customTeamKey].players =
         action.payload.players;
       state.isLoading = false;
