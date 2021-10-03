@@ -143,12 +143,17 @@ const PlayerCard = ({
           <View style={styles.viewContainer}>
             <View style={styles.imageContainer}>
               {/* TODO: uri will need to be env variable along with query calls in all reducers */}
-              <Image
-                source={{
-                  uri: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
-                }}
-                style={{width: 200, height: 200}}
-              />
+              {!isImageFailed ? (
+                <Image
+                  source={{
+                    uri: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
+                  }}
+                  style={{width: 200, height: 200}}
+                  onError={onErrorLoadingImage}
+                />
+              ) : (
+                <Text>No Image Available</Text>
+              )}
               <View style={styles.jersyContainer}>
                 <Text style={styles.jersey}>{jersey}</Text>
               </View>
