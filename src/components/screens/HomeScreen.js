@@ -15,9 +15,9 @@ const HomeScreen = ({route, navigation}) => {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
-  console.log('HOME teamState', teamState);
-  console.log('HOME teamState.teams', teamState.teams);
-  console.log('HOME teamState.teams.length', teamState.teams.length);
+  // console.log('HOME teamState', teamState);
+  // console.log('HOME teamState.teams', teamState.teams);
+  // console.log('HOME teamState.teams.length', teamState.teams.length);
 
   const handleAddTeam = () => {
     let customTeamId = '';
@@ -125,12 +125,14 @@ const HomeScreen = ({route, navigation}) => {
                 value={teamName}
                 onChangeText={value => setTeamName(value)}
                 style={styles.modalInput}
+                maxLength={20}
               />
               <TextInput
                 label="City Name"
                 value={cityName}
                 onChangeText={value => setCityName(value)}
                 style={styles.modalInput}
+                maxLength={20}
               />
               <View style={styles.modalButtonContainer}>
                 <Button
@@ -197,9 +199,6 @@ const styles = StyleSheet.create({
     marginTop: 190,
     marginBottom: 190,
     borderRadius: 10,
-  },
-  modalViewContainer: {
-    backgroundColor: 'blue',
   },
   modalContent: {
     padding: 10,
