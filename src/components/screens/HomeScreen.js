@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
@@ -9,11 +9,17 @@ const HomeScreen = ({route, navigation}) => {
   const [visible, setVisible] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [cityName, setCityName] = useState('');
+  const [isAddNewTeamButtonDisabled, setIsAddNewTeamButtonDisabled] =
+    useState(false);
   const teamState = useSelector(state => state.team);
   const dispatch = useDispatch();
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
+  useEffect(() => {
+    getTeamCount();
+  }, [getTeamCount, teamState]);
 
   // console.log('HOME teamState', teamState);
   // console.log('HOME teamState.teams', teamState.teams);
@@ -97,6 +103,14 @@ const HomeScreen = ({route, navigation}) => {
     hideModal();
   };
 
+  const getTeamCount = useCallback(() => {
+    let teamCount = teamState.teams && teamState.teams.length;
+    console.log('GETTEAMCOUNT ', teamCount);
+    teamCount === 3
+      ? setIsAddNewTeamButtonDisabled(true)
+      : setIsAddNewTeamButtonDisabled(false);
+  }, [teamState]);
+
   const renderItem = ({item}) => (
     <TeamCard
       teamName={item.name}
@@ -157,10 +171,14 @@ const HomeScreen = ({route, navigation}) => {
         <View style={styles.buttonContainer}>
           {/* TODO: Could be resuable component - also used in Edit Screen */}
           <Button
-            style={styles.newTeam}
+            style={[
+              styles.newTeam,
+              isAddNewTeamButtonDisabled && {backgroundColor: '#D3D3D3'},
+            ]}
             icon="account-group"
             mode="contained"
-            onPress={showModal}>
+            onPress={showModal}
+            disabled={isAddNewTeamButtonDisabled}>
             Add New Team
           </Button>
           <Button
