@@ -44,7 +44,8 @@ const HomeScreen = ({route, navigation}) => {
     //   setScreen('Home');
     // }
   }, [teamState, navigation, isFocused, screen]);
-  console.log('HOME teamState.teams', teamState.teams[0]);
+  console.log('HOME teamState', teamState);
+  console.log('HOME teamState.teams', teamState.teams);
   console.log('HOME teamState.teams.length', teamState.teams.length);
 
   const handleAddTeam = () => {
@@ -140,16 +141,6 @@ const HomeScreen = ({route, navigation}) => {
   };
 
   const renderItem = ({item}) => (
-    // console.log('item, ', item);
-    // console.log('HIT HOME ', item);
-    // console.log('XXXXXXXXX');
-    // console.log('teamName ', item.name);
-    // console.log('city ', item.city);
-    // console.log('navigation ', navigation);
-    // console.log('customTeamId ', item.id);
-    // console.log('customTeamKey ', item.key);
-    // console.log('screen ', screen);
-    // console.log('XXXXXXXXX');
     <TeamCard
       teamName={item.name}
       city={item.city}

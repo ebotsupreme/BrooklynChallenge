@@ -27,28 +27,42 @@ export const teamSlice = createSlice({
     },
     addTeam: (state, action) => {
       console.log('Add Team state, ', state, ' Action ', 'action');
+      console.log('add team state.teams.length ', state.teams.length);
 
       state.teams = [...state.teams, action.payload];
       state.teamCount += 1;
       state.isLoading = false;
     },
     removeTeam: (state, action) => {
+      console.log('REMOVE TEAM SLICE');
       console.log(
         'state.teams[action.payload.customTeamKey] ',
         state.teams[action.payload.customTeamKey],
       );
+      console.log('REMOVE TEAM state.teams.length ', state.teams.length);
+      if (state.teams.length === 1) {
+        console.log('REMOVE TEAM length is equal to 1');
+        state.teams = action.payload.team;
+      } else {
+        console.log('REMOVE TEAM length greater than 1, start filter ');
+        state.teams[action.payload.customTeamKey] = state.teams[
+          action.payload.customTeamKey
+        ].length = 0;
+        state.teams = state.teams.filter(
+          team => team.id !== action.payload.customTeamId,
+        );
+        console.log('state', state);
+      }
       // state.teams[action.payload.customTeamKey] = action.payload.team;
-
-      // state.teams[action.payload.customTeamKey] = state.teams[
-      //   action.payload.customTeamKey
-      // ].length = 0;
-      // state.teams = state.teams.filter(
-      //   team => team.id !== action.payload.customTeamId,
-      // );
-      console.log('state', state);
+      state.teamCount -= 1;
       state.isLoading = false;
     },
     addPlayer: (state, action) => {
+      console.log('ADD PLAYER SLICE ');
+      console.log(
+        'ADD PLAYER SLICE state.teams[action.payload.customTeamKey] ',
+        state.teams[action.payload.customTeamKey],
+      );
       state.teams[action.payload.customTeamKey].players = [
         ...state.teams[action.payload.customTeamKey].players,
         action.payload,

@@ -11,21 +11,22 @@ const EditScreen = ({route, navigation}) => {
     useState(false);
   const teamState = useSelector(state => state.team);
   const {customTeamId, customTeamKey} = route.params;
-  const {name, city, id} = teamState.teams[customTeamKey];
+  const {name, city, id} =
+    teamState.teams.length && teamState.teams[customTeamKey];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('EDIT SCREEN START');
-    console.log('customTeamKey ', customTeamKey);
-    console.log('teamState ', teamState);
-    console.log('teamState.teams ', teamState.teams);
-    console.log(
-      'Edit Screen teamState players',
-      teamState.teams[customTeamKey].players,
-    );
-    console.log('XXXXXX');
-    console.log(name, city, id);
-    console.log('EDIT SCREEN END');
+    // console.log('EDIT SCREEN START');
+    // console.log('customTeamKey ', customTeamKey);
+    // console.log('teamState ', teamState);
+    // console.log('teamState.teams ', teamState.teams);
+    // console.log(
+    //   'Edit Screen teamState players',
+    //   teamState.teams[customTeamKey].players,
+    // );
+    // console.log('XXXXXX');
+    // console.log(name, city, id);
+    // console.log('EDIT SCREEN END');
     getPlayerCount();
   }, [city, customTeamKey, getPlayerCount, id, name, teamState]);
 

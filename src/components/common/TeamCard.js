@@ -3,7 +3,6 @@ import {Text, StyleSheet, View} from 'react-native';
 import {Card, Paragraph, IconButton, Colors} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
-import {useRoute} from '@react-navigation/native';
 import {removeTeam} from '../../features/team/teamSlice';
 
 const TeamCard = ({
@@ -16,19 +15,17 @@ const TeamCard = ({
   screen = '',
 }) => {
   const dispatch = useDispatch();
-  const route = useRoute();
 
   useEffect(() => {
     console.log('TCCCCC TCCCCC STARTTTT: ');
     console.log('TCCCCC TCCCCC screen: ', screen);
-    console.log('NAVIGATION ROUTE ', route.name);
     console.log('TCCCCC TCCCCC teamName: ', teamName);
     console.log('TCCCCC TCCCCC teamId: ', teamId);
     console.log('TCCCCC TCCCCC city: ', city);
     console.log('TCCCCC TCCCCC customTeamId: ', customTeamId);
     console.log('TCCCCC TCCCCC screen: ', screen);
     console.log('TCCCCC TCCCCC ENDDDD: ');
-  }, [city, customTeamId, route.name, screen, teamId, teamName]);
+  }, [city, customTeamId, screen, teamId, teamName]);
 
   const handleSelectTeam = selectedTeam => {
     navigation.navigate('Player Selection', {
@@ -44,27 +41,15 @@ const TeamCard = ({
     dispatch(
       removeTeam({
         name: teamName,
-        team: {},
+        team: [],
         customTeamId,
         customTeamKey,
       }),
     );
   };
 
-  const handleHomeRoute = () => {
-    console.log('handleHomeRoute');
-    navigation.navigate('Home', {
-      screen: 'Home',
-    });
-  };
-
   return (
     <>
-      {/* {screen && (
-        <>
-          <Text>{`!!! ${screen} !!!!`}</Text>
-        </>
-      )} */}
       {screen === 'Edit' && (
         <>
           <Card style={styles.container}>
@@ -73,29 +58,6 @@ const TeamCard = ({
               <Text style={styles.editTeamCity}>{city}</Text>
             </View>
           </Card>
-          {/* <View style={styles.homeRouteButtonContainer}>
-            <IconButton
-              icon="home"
-              color={Colors.red500}
-              size={26}
-              onPress={handleHomeRoute}
-            />
-          </View> */}
-          {/* <Text>EDIT HOME</Text>
-          <Card style={styles.container}>
-            <View style={styles.viewHomeTeamContainer}>
-              <Text style={styles.editTeamName}>{teamName}</Text>
-              <Text style={styles.editTeamCity}>{city}</Text>
-            </View>
-          </Card>
-          <View style={styles.removeTeamContainer}>
-            <IconButton
-              icon="account-multiple-remove"
-              color={Colors.red500}
-              size={30}
-              onPress={handleRemoveTeam}
-            />
-          </View> */}
         </>
       )}
       {screen === 'Home' && (
@@ -161,7 +123,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    backgroundColor: 'brown',
+    backgroundColor: 'purple',
   },
   removeTeamContainer: {
     position: 'absolute',
