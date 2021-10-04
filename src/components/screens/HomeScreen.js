@@ -1,29 +1,51 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {
+  Button,
+  Modal,
+  Portal,
+  TextInput,
+  Provider,
+  Card,
+} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {startLoading, hasError, addTeam} from '../../features/team/teamSlice';
+import TeamCard from '../common/TeamCard';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({route, navigation}) => {
   const [visible, setVisible] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [cityName, setCityName] = useState('');
+  const [screen, setScreen] = useState('Home');
   const teamState = useSelector(state => state.team);
+  console.log('HOME route ', route);
+  // const {screen} = route.params && route.params;
   const dispatch = useDispatch();
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const isFocused = navigation.isFocused();
 
-  // useEffect(() => {
-  //   console.log('HOME teamState', teamState);
-  //   if (teamState.teams[0]) {
-  //     console.log('teamState.teams[0]', teamState.teams[0]);
-  //   }
-  //   // console.log('teamState.teams.player', teamState.teams.player);
-  //   if (teamState.teams[0]) {
-  //     console.log('teamState.teams.player', teamState.teams[0].player);
-  //   }
-  // }, [teamState]);
+  useEffect(() => {
+    console.log('HOME teamState', teamState);
+    // console.log('HOME SCREEN ', screen);
+    if (teamState.teams) {
+      console.log('teamState.teams', teamState.teams);
+    }
+    // console.log('teamState.teams.player', teamState.teams.player);
+    if (teamState.teams[0]) {
+      console.log('teamState.teams[0]', teamState.teams[0]);
+    }
+
+    console.log('navigation ', navigation);
+    console.log('screen', screen);
+    // if (isFocused) {
+    //   console.log('FOCUSED ', isFocused);
+    //   setScreen('Home');
+    // }
+  }, [teamState, navigation, isFocused, screen]);
+  console.log('HOME teamState.teams', teamState.teams[0]);
+  console.log('HOME teamState.teams.length', teamState.teams.length);
 
   const handleAddTeam = () => {
     let customTeamId = '';
@@ -93,6 +115,11 @@ const HomeScreen = ({navigation}) => {
     // ) {
     // }
     // console.log('HomeS custom team id: ', customTeamId);
+
+    setTeamName('');
+    setCityName('');
+    hideModal();
+
     navigation.navigate('Team Selection', {
       customTeamId,
       customTeamKey,
@@ -100,6 +127,38 @@ const HomeScreen = ({navigation}) => {
 
     // console.log('teamState', teamState);
   };
+
+  const handleClearTeam = () => {
+    console.log('HANDLE CLEAR TEAM');
+  };
+
+  const handleCloseModal = () => {
+    console.log('handleCloseModal');
+    setTeamName('');
+    setCityName('');
+    hideModal();
+  };
+
+  const renderItem = ({item}) => (
+    // console.log('item, ', item);
+    // console.log('HIT HOME ', item);
+    // console.log('XXXXXXXXX');
+    // console.log('teamName ', item.name);
+    // console.log('city ', item.city);
+    // console.log('navigation ', navigation);
+    // console.log('customTeamId ', item.id);
+    // console.log('customTeamKey ', item.key);
+    // console.log('screen ', screen);
+    // console.log('XXXXXXXXX');
+    <TeamCard
+      teamName={item.name}
+      city={item.city}
+      navigation={navigation}
+      customTeamId={item.id}
+      customTeamKey={item.key}
+      screen={'Home'}
+    />
+  );
 
   return (
     <Provider>
@@ -136,7 +195,7 @@ const HomeScreen = ({navigation}) => {
                   style={styles.clear}
                   icon="axe"
                   mode="contained"
-                  onPress={hideModal}>
+                  onPress={handleCloseModal}>
                   Cancel
                 </Button>
               </View>
@@ -157,9 +216,20 @@ const HomeScreen = ({navigation}) => {
             style={styles.clear}
             icon="axe"
             mode="contained"
-            onPress={() => console.log('clear all Pressed')}>
+            onPress={handleClearTeam}>
             Clear
           </Button>
+        </View>
+        <View style={styles.teamCardsContainer}>
+          {teamState.teams && (
+            <>
+              <FlatList
+                data={teamState.teams && teamState.teams}
+                renderItem={renderItem}
+                keyExtractor={item => item.key}
+              />
+            </>
+          )}
         </View>
       </View>
     </Provider>
@@ -203,6 +273,10 @@ const styles = StyleSheet.create({
   },
   clear: {
     backgroundColor: 'red',
+  },
+  teamCardsContainer: {
+    margin: 10,
+    paddingTop: 10,
   },
 });
 

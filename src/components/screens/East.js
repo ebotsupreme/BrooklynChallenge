@@ -10,6 +10,7 @@ const East = ({data, customTeamId, customTeamKey, navigation}) => {
       navigation={navigation}
       customTeamId={customTeamId}
       customTeamKey={customTeamKey}
+      screen={'SelectTeam'}
     />
   );
 

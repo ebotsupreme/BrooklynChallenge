@@ -11,7 +11,7 @@ const EditScreen = ({route, navigation}) => {
     useState(false);
   const teamState = useSelector(state => state.team);
   const {customTeamId, customTeamKey} = route.params;
-  const {name, city, id} = teamState && teamState.teams[customTeamKey];
+  const {name, city, id} = teamState.teams[customTeamKey];
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,13 +37,23 @@ const EditScreen = ({route, navigation}) => {
   };
 
   const getPlayerCount = useCallback(() => {
-    console.log('getPlayerCount ', teamState);
-    if (teamState.teams) {
+    console.log('getPlayerCount teamState ', teamState);
+    console.log('teamState.teams.length', teamState.teams.length);
+    if (
+      teamState.teams[customTeamKey] &&
+      teamState.teams[customTeamKey].length >= 1
+    ) {
+      console.log(
+        'EEE teamState.teams[customTeamKey]: ',
+        teamState.teams[customTeamKey],
+        ' EEE',
+      );
       console.log(
         'PLAYER COUNT  ',
         teamState.teams[customTeamKey].players.length,
       );
-      let playerCount = teamState.teams[customTeamKey].players.length;
+      let playerCount =
+        teamState.teams && teamState.teams[customTeamKey].players.length;
       playerCount === 5
         ? setIsAddPlayerButtonDisabled(true)
         : setIsAddPlayerButtonDisabled(false);
@@ -120,7 +130,7 @@ const EditScreen = ({route, navigation}) => {
         <View style={{flex: 1}}>
           {teamState.teams[customTeamKey] && (
             <FlatList
-              data={teamState && teamState.teams[customTeamKey].players}
+              data={teamState.teams[customTeamKey].players}
               renderItem={renderItem}
               keyExtractor={item => item.id}
               contentContainerStyle={{paddingVertical: 10}}

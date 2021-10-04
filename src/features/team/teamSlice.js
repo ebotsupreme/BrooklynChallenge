@@ -26,8 +26,26 @@ export const teamSlice = createSlice({
       state.isLoaded = false;
     },
     addTeam: (state, action) => {
+      console.log('Add Team state, ', state, ' Action ', 'action');
+
       state.teams = [...state.teams, action.payload];
       state.teamCount += 1;
+      state.isLoading = false;
+    },
+    removeTeam: (state, action) => {
+      console.log(
+        'state.teams[action.payload.customTeamKey] ',
+        state.teams[action.payload.customTeamKey],
+      );
+      // state.teams[action.payload.customTeamKey] = action.payload.team;
+
+      // state.teams[action.payload.customTeamKey] = state.teams[
+      //   action.payload.customTeamKey
+      // ].length = 0;
+      // state.teams = state.teams.filter(
+      //   team => team.id !== action.payload.customTeamId,
+      // );
+      console.log('state', state);
       state.isLoading = false;
     },
     addPlayer: (state, action) => {
@@ -58,6 +76,7 @@ export const {
   updateTeamTwo,
   updateTeamThree,
   addTeam,
+  removeTeam,
   addPlayer,
   removePlayer,
   removeAllPlayers,

@@ -17,12 +17,12 @@ const PlayerSelectionScreen = ({route, navigation}) => {
       filterData(data.league);
     }
 
-    console.log('PLAYER SELECTION SCREEN TEAMSTATE TEAM', teamState.teams);
-    console.log(
-      'PLAYER SELECTION SCREEN TEAMSTATE PLAYERS',
-      teamState.teams[0].players,
-    );
-  }, [data, filterData, teamState]);
+    // console.log('PLAYER SELECTION SCREEN TEAMSTATE TEAM', teamState.teams);
+    // console.log(
+    //   'PLAYER SELECTION SCREEN TEAMSTATE PLAYERS',
+    //   teamState.teams[0].players,
+    // );
+  }, [data, filterData]);
 
   // TODO: Make common component
   const filterData = useCallback(
