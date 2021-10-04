@@ -1,13 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-import {
-  Button,
-  Modal,
-  Portal,
-  TextInput,
-  Provider,
-  Card,
-} from 'react-native-paper';
+import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {startLoading, hasError, addTeam} from '../../features/team/teamSlice';
 import TeamCard from '../common/TeamCard';
@@ -16,34 +9,12 @@ const HomeScreen = ({route, navigation}) => {
   const [visible, setVisible] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [cityName, setCityName] = useState('');
-  const [screen, setScreen] = useState('Home');
   const teamState = useSelector(state => state.team);
-  console.log('HOME route ', route);
-  // const {screen} = route.params && route.params;
   const dispatch = useDispatch();
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const isFocused = navigation.isFocused();
 
-  useEffect(() => {
-    console.log('HOME teamState', teamState);
-    // console.log('HOME SCREEN ', screen);
-    if (teamState.teams) {
-      console.log('teamState.teams', teamState.teams);
-    }
-    // console.log('teamState.teams.player', teamState.teams.player);
-    if (teamState.teams[0]) {
-      console.log('teamState.teams[0]', teamState.teams[0]);
-    }
-
-    console.log('navigation ', navigation);
-    console.log('screen', screen);
-    // if (isFocused) {
-    //   console.log('FOCUSED ', isFocused);
-    //   setScreen('Home');
-    // }
-  }, [teamState, navigation, isFocused, screen]);
   console.log('HOME teamState', teamState);
   console.log('HOME teamState.teams', teamState.teams);
   console.log('HOME teamState.teams.length', teamState.teams.length);
@@ -105,18 +76,6 @@ const HomeScreen = ({route, navigation}) => {
         break;
     }
 
-    if (!teamState.teamCount) {
-      console.log('zero', teamState.teamCount);
-    }
-
-    // if (
-    //   teamState.teamOnIsActive ||
-    //   teamState.teamTwoIsActive ||
-    //   teamState.teamThreeIsActive
-    // ) {
-    // }
-    // console.log('HomeS custom team id: ', customTeamId);
-
     setTeamName('');
     setCityName('');
     hideModal();
@@ -125,8 +84,6 @@ const HomeScreen = ({route, navigation}) => {
       customTeamId,
       customTeamKey,
     });
-
-    // console.log('teamState', teamState);
   };
 
   const handleClearTeam = () => {

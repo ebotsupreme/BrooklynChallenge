@@ -34,12 +34,6 @@ export const teamSlice = createSlice({
       state.isLoading = false;
     },
     removeTeam: (state, action) => {
-      console.log('REMOVE TEAM SLICE');
-      console.log(
-        'state.teams[action.payload.customTeamKey] ',
-        state.teams[action.payload.customTeamKey],
-      );
-      console.log('REMOVE TEAM state.teams.length ', state.teams.length);
       if (state.teams.length === 1) {
         console.log('REMOVE TEAM length is equal to 1');
         state.teams = action.payload.team;
@@ -58,11 +52,6 @@ export const teamSlice = createSlice({
       state.isLoading = false;
     },
     addPlayer: (state, action) => {
-      console.log('ADD PLAYER SLICE ');
-      console.log(
-        'ADD PLAYER SLICE state.teams[action.payload.customTeamKey] ',
-        state.teams[action.payload.customTeamKey],
-      );
       state.teams[action.payload.customTeamKey].players = [
         ...state.teams[action.payload.customTeamKey].players,
         action.payload,

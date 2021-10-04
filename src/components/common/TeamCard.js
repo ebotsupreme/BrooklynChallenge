@@ -16,17 +16,6 @@ const TeamCard = ({
 }) => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('TCCCCC TCCCCC STARTTTT: ');
-    console.log('TCCCCC TCCCCC screen: ', screen);
-    console.log('TCCCCC TCCCCC teamName: ', teamName);
-    console.log('TCCCCC TCCCCC teamId: ', teamId);
-    console.log('TCCCCC TCCCCC city: ', city);
-    console.log('TCCCCC TCCCCC customTeamId: ', customTeamId);
-    console.log('TCCCCC TCCCCC screen: ', screen);
-    console.log('TCCCCC TCCCCC ENDDDD: ');
-  }, [city, customTeamId, screen, teamId, teamName]);
-
   const handleSelectTeam = selectedTeam => {
     navigation.navigate('Player Selection', {
       selectedTeamName: selectedTeam,

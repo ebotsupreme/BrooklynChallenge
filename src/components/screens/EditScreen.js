@@ -16,19 +16,8 @@ const EditScreen = ({route, navigation}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log('EDIT SCREEN START');
-    // console.log('customTeamKey ', customTeamKey);
-    // console.log('teamState ', teamState);
-    // console.log('teamState.teams ', teamState.teams);
-    // console.log(
-    //   'Edit Screen teamState players',
-    //   teamState.teams[customTeamKey].players,
-    // );
-    // console.log('XXXXXX');
-    // console.log(name, city, id);
-    // console.log('EDIT SCREEN END');
     getPlayerCount();
-  }, [city, customTeamKey, getPlayerCount, id, name, teamState]);
+  }, [getPlayerCount, teamState]);
 
   const handleAddPlayer = () => {
     navigation.navigate('Team Selection', {
@@ -38,32 +27,12 @@ const EditScreen = ({route, navigation}) => {
   };
 
   const getPlayerCount = useCallback(() => {
-    console.log('getPlayerCount teamState ', teamState);
-    console.log('teamState.teams.length', teamState.teams.length);
-    if (
-      teamState.teams[customTeamKey] &&
-      teamState.teams[customTeamKey].length >= 1
-    ) {
-      console.log(
-        'EEE teamState.teams[customTeamKey]: ',
-        teamState.teams[customTeamKey],
-        ' EEE',
-      );
-      console.log(
-        'PLAYER COUNT  ',
-        teamState.teams[customTeamKey].players.length,
-      );
+    if (teamState.teams[customTeamKey]) {
       let playerCount =
         teamState.teams && teamState.teams[customTeamKey].players.length;
       playerCount === 5
         ? setIsAddPlayerButtonDisabled(true)
         : setIsAddPlayerButtonDisabled(false);
-      // if (playerCount === 5) {
-      //   // disable add player button
-      //   setIsAddPlayerButtonActive(false);
-      // } else {
-      //   setIsAddPlayerButtonActive(true);
-      // }
     }
   }, [customTeamKey, teamState]);
 
@@ -93,36 +62,40 @@ const EditScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <TeamCard
-        teamName={name}
-        teamId={id}
-        city={city}
-        navigation={navigation}
-        screen={'Edit'}
-      />
-      <View style={styles.buttonContainer}>
-        {/* TODO: Could be resuable component - also used in Edit Screen */}
-        <Button
-          style={[
-            styles.newTeam,
-            isAddPlayerButtonDisabled && {backgroundColor: '#D3D3D3'},
-          ]}
-          labelStyle={{fontSize: 14}}
-          icon="account"
-          mode="contained"
-          onPress={handleAddPlayer}
-          disabled={isAddPlayerButtonDisabled}>
-          Add Player
-        </Button>
-        <Button
-          style={styles.clear}
-          labelStyle={{fontSize: 14}}
-          icon="axe"
-          mode="contained"
-          onPress={handleClearAll}>
-          Clear All
-        </Button>
-      </View>
+      {teamState.teams.length >= 1 && (
+        <>
+          <TeamCard
+            teamName={name}
+            teamId={id}
+            city={city}
+            navigation={navigation}
+            screen={'Edit'}
+          />
+          <View style={styles.buttonContainer}>
+            {/* TODO: Could be resuable component - also used in Edit Screen */}
+            <Button
+              style={[
+                styles.newTeam,
+                isAddPlayerButtonDisabled && {backgroundColor: '#D3D3D3'},
+              ]}
+              labelStyle={{fontSize: 14}}
+              icon="account"
+              mode="contained"
+              onPress={handleAddPlayer}
+              disabled={isAddPlayerButtonDisabled}>
+              Add Player
+            </Button>
+            <Button
+              style={styles.clear}
+              labelStyle={{fontSize: 14}}
+              icon="axe"
+              mode="contained"
+              onPress={handleClearAll}>
+              Clear All
+            </Button>
+          </View>
+        </>
+      )}
       {teamState.error ? (
         <Text>There was an error.</Text>
       ) : teamState.isLoading ? (

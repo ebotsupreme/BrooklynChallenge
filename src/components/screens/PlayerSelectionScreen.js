@@ -1,9 +1,8 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {useGetAllPlayersQuery} from '../../services/players';
 import PlayerCard from '../common/PlayerCard';
-// import {useGetPlayerImageQuery} from '../../services/playerImage';
 
 const PlayerSelectionScreen = ({route, navigation}) => {
   const [players, setPlayers] = useState(null);
@@ -16,12 +15,6 @@ const PlayerSelectionScreen = ({route, navigation}) => {
     if (data && data.league) {
       filterData(data.league);
     }
-
-    // console.log('PLAYER SELECTION SCREEN TEAMSTATE TEAM', teamState.teams);
-    // console.log(
-    //   'PLAYER SELECTION SCREEN TEAMSTATE PLAYERS',
-    //   teamState.teams[0].players,
-    // );
   }, [data, filterData]);
 
   // TODO: Make common component
@@ -31,7 +24,6 @@ const PlayerSelectionScreen = ({route, navigation}) => {
 
       if (dataToFilter.standard) {
         dataToFilter.standard.filter(player => {
-          // console.log('player to filter: ', player);
           if (player.teamId === selectedTeamId && player.nbaDebutYear) {
             filteredPlayers.push(player);
           }
