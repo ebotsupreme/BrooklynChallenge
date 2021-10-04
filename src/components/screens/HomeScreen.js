@@ -111,6 +111,7 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <Provider>
       <View style={styles.container}>
+        {/* TODO: Modal may need to be a common component, also used in TeamCard Home */}
         <Portal>
           <Modal
             visible={visible}

@@ -51,6 +51,11 @@ export const teamSlice = createSlice({
       state.teamCount -= 1;
       state.isLoading = false;
     },
+    editTeam: (state, action) => {
+      state.teams[action.payload.customTeamKey].name = action.payload.name;
+      state.teams[action.payload.customTeamKey].city = action.payload.city;
+      state.isLoading = false;
+    },
     addPlayer: (state, action) => {
       state.teams[action.payload.customTeamKey].players = [
         ...state.teams[action.payload.customTeamKey].players,
@@ -83,6 +88,7 @@ export const {
   addPlayer,
   removePlayer,
   removeAllPlayers,
+  editTeam,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;

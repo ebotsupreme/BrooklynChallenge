@@ -1,9 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import {Card, Paragraph, IconButton, Colors} from 'react-native-paper';
+import {
+  Card,
+  Paragraph,
+  IconButton,
+  Colors,
+  Portal,
+  Modal,
+  TextInput,
+  Button,
+} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
-import {removeTeam} from '../../features/team/teamSlice';
+import {removeTeam, editTeam} from '../../features/team/teamSlice';
 
 const TeamCard = ({
   teamName,
@@ -14,7 +23,13 @@ const TeamCard = ({
   navigation,
   screen = '',
 }) => {
+  const [visible, setVisible] = useState(false);
+  const [editTeamName, setEditTeamName] = useState('');
+  const [editTeamCity, setEditTeamCity] = useState('');
   const dispatch = useDispatch();
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
 
   const handleSelectTeam = selectedTeam => {
     navigation.navigate('Player Selection', {
@@ -23,6 +38,11 @@ const TeamCard = ({
       customTeamId,
       customTeamKey,
     });
+  };
+
+  const handleEditTeam = () => {
+    console.log('handleEditTeam');
+    // show modal here
   };
 
   const handleRemoveTeam = () => {
@@ -35,6 +55,29 @@ const TeamCard = ({
         customTeamKey,
       }),
     );
+  };
+
+  const handleEditTeamModal = () => {
+    console.log('handleEditTeamModal');
+    // dispatch edit team here
+    dispatch(
+      editTeam({
+        name: editTeamName,
+        city: editTeamCity,
+        customTeamId,
+        customTeamKey,
+      }),
+    );
+    setEditTeamName('');
+    setEditTeamCity('');
+    hideModal();
+  };
+
+  const handleCloseModal = () => {
+    console.log('handleCloseModal');
+    setEditTeamName('');
+    setEditTeamCity('');
+    hideModal();
   };
 
   return (
@@ -51,12 +94,67 @@ const TeamCard = ({
       )}
       {screen === 'Home' && (
         <>
+          {/* TODO: Modal may need to be a common component, also used in HomeScreen */}
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModal}
+              style={styles.modalContainer}
+              contentContainerStyle={styles.modalContent}>
+              <View>
+                {/* TODO: Add validation - no empty strings, max char */}
+                <TextInput
+                  label="Team Name"
+                  value={editTeamName}
+                  onChangeText={value => setEditTeamName(value)}
+                  style={styles.modalInput}
+                />
+                <TextInput
+                  label="City Name"
+                  value={editTeamCity}
+                  onChangeText={value => setEditTeamCity(value)}
+                  style={styles.modalInput}
+                />
+                <View style={styles.modalButtonContainer}>
+                  <Button
+                    style={styles.newTeam}
+                    icon="account-group"
+                    mode="contained"
+                    onPress={handleEditTeamModal}>
+                    Edit
+                  </Button>
+                  <Button
+                    style={styles.clear}
+                    icon="axe"
+                    mode="contained"
+                    onPress={handleCloseModal}>
+                    Cancel
+                  </Button>
+                </View>
+              </View>
+            </Modal>
+          </Portal>
           <Card style={styles.container}>
             <View style={styles.viewHomeTeamContainer}>
               <Text style={styles.editTeamName}>{teamName}</Text>
               <Text style={styles.editTeamCity}>{city}</Text>
             </View>
           </Card>
+          {/* <View
+            style={{
+              flexDirection: 'row',
+              // backgroundColor: 'blue',
+              position: 'relative',
+            }}> */}
+
+          <View style={styles.editTeamContainer}>
+            <IconButton
+              icon="account-edit"
+              color={Colors.red500}
+              size={30}
+              onPress={showModal}
+            />
+          </View>
           <View style={styles.removeTeamContainer}>
             <IconButton
               icon="account-multiple-remove"
@@ -65,6 +163,7 @@ const TeamCard = ({
               onPress={handleRemoveTeam}
             />
           </View>
+          {/* </View> */}
         </>
       )}
       {screen === 'SelectTeam' && (
@@ -86,7 +185,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     margin: 5,
-    // backgroundColor: 'grey',
   },
   viewContainer: {
     flexDirection: 'row',
@@ -114,23 +212,52 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'purple',
   },
+  editTeamContainer: {
+    position: 'absolute',
+    top: 10,
+    left: 0,
+    right: 12,
+    bottom: 20,
+    alignItems: 'flex-end',
+  },
   removeTeamContainer: {
     position: 'absolute',
-    top: 16,
+    top: 60,
     left: 0,
     right: 15,
-    bottom: 0,
+    bottom: 20,
     alignItems: 'flex-end',
-    // backgroundColor: 'grey',
   },
-  homeRouteButtonContainer: {
-    position: 'absolute',
-    top: 65,
-    left: 0,
-    right: 20,
-    bottom: 0,
-    alignItems: 'flex-end',
-    // backgroundColor: 'grey',
+  // MODAL Same css as HOMESCREEN
+  modalContainer: {
+    flex: 1,
+    backgroundColor: '#fafafa',
+    margin: 40,
+    marginTop: 190,
+    marginBottom: 190,
+    borderRadius: 10,
+  },
+  modalContent: {
+    padding: 10,
+  },
+  modalInput: {
+    margin: 5,
+    marginBottom: 15,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    paddingTop: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  newTeam: {
+    backgroundColor: 'green',
+  },
+  clear: {
+    backgroundColor: 'red',
   },
 });
 
