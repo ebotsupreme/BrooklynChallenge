@@ -38,17 +38,7 @@ const PlayerCard = ({
 
   const handleSelectPlayer = selectedPlayer => {
     const fullName = `${selectedPlayer.firstName} ${selectedPlayer.lastName}`;
-    //TODO: Navigate to edit teams with paylod OR
-    // save player to GLOBAL TEAM STATE
-    // navigation.navigate('Edit Team', {
-    //   selectedPlayerName: fullName,
-    //   selectedPlayerId: personId,
-    //   selectedPlayerImage: `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${player.personId}.png`,
-    //   selectedPlayerTeam: teamName,
-    //   customTeamId,
-    // });
 
-    // OR save player here to state
     dispatch(
       addPlayer({
         id: personId,
@@ -68,12 +58,6 @@ const PlayerCard = ({
   };
 
   const handleRemovePlayer = () => {
-    console.log(
-      'handleRemovePlayer - customTeamId, playerId, playerName: ',
-      customTeamId,
-      id,
-      name,
-    );
     dispatch(
       removePlayer({
         id,
@@ -203,7 +187,6 @@ const styles = StyleSheet.create({
   },
   jersey: {
     fontSize: 40,
-    // backgroundColor: 'red',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 15,
@@ -238,10 +221,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   nameEditMode: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '800',
     marginTop: 5,
-    // backgroundColor: 'green',
     paddingHorizontal: 15,
   },
   bottomEditMode: {
@@ -250,7 +232,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     paddingVertical: 5,
-    // backgroundColor: 'green',
     paddingHorizontal: 15,
   },
   jersyContainerEditMode: {
@@ -278,7 +259,6 @@ const styles = StyleSheet.create({
     right: 2,
     bottom: 0,
     alignItems: 'flex-end',
-    // backgroundColor: 'grey',
   },
 });
 

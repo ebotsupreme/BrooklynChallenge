@@ -1,28 +1,19 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
 import {useGetAllPlayersQuery} from '../../services/players';
 import PlayerCard from '../common/PlayerCard';
-// import {useGetPlayerImageQuery} from '../../services/playerImage';
 
 const PlayerSelectionScreen = ({route, navigation}) => {
   const [players, setPlayers] = useState(null);
   const {selectedTeamName, selectedTeamId, customTeamId, customTeamKey} =
     route.params;
   const {data, isLoading, error} = useGetAllPlayersQuery(selectedTeamName);
-  const teamState = useSelector(state => state.team);
 
   useEffect(() => {
     if (data && data.league) {
       filterData(data.league);
     }
-
-    console.log('PLAYER SELECTION SCREEN TEAMSTATE TEAM', teamState.teams);
-    console.log(
-      'PLAYER SELECTION SCREEN TEAMSTATE PLAYERS',
-      teamState.teams[0].players,
-    );
-  }, [data, filterData, teamState]);
+  }, [data, filterData]);
 
   // TODO: Make common component
   const filterData = useCallback(
@@ -31,7 +22,6 @@ const PlayerSelectionScreen = ({route, navigation}) => {
 
       if (dataToFilter.standard) {
         dataToFilter.standard.filter(player => {
-          // console.log('player to filter: ', player);
           if (player.teamId === selectedTeamId && player.nbaDebutYear) {
             filteredPlayers.push(player);
           }

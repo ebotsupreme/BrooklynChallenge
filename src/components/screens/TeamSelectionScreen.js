@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Dimensions, StyleSheet, StatusBar} from 'react-native';
+import {Text, Dimensions} from 'react-native';
 import {useGetAllTeamsQuery} from '../../services/teams';
 import {TabView} from 'react-native-tab-view';
 import West from './West';
@@ -79,21 +79,11 @@ const TeamSelectionScreen = ({route, navigation}) => {
             renderScene={renderScene}
             onIndexChange={setIndex}
             initialLayout={initialLayout}
-            style={styles.container}
           />
         </>
       ) : null}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    // marginTop: StatusBar.currentHeight,
-  },
-  scene: {
-    flex: 1,
-  },
-});
 
 export default TeamSelectionScreen;

@@ -1,33 +1,49 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Platform} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {removeAllPlayers} from '../../features/team/teamSlice';
-import {Button} from 'react-native-paper';
+import {removeAllPlayers, editTeam} from '../../features/team/teamSlice';
+import {Button, Portal, Modal, TextInput, Provider} from 'react-native-paper';
 import TeamCard from '../common/TeamCard';
 import PlayerCard from '../common/PlayerCard';
 
 const EditScreen = ({route, navigation}) => {
   const [isAddPlayerButtonDisabled, setIsAddPlayerButtonDisabled] =
     useState(false);
+  const [visible, setVisible] = useState(false);
+  const [editTeamName, setEditTeamName] = useState('');
+  const [editTeamCity, setEditTeamCity] = useState('');
+  const [currentTeam, setCurrentTeam] = useState(null);
   const teamState = useSelector(state => state.team);
   const {customTeamId, customTeamKey} = route.params;
-  const {name, city, id} = teamState && teamState.teams[customTeamKey];
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+
+  if (currentTeam !== undefined) {
+    if (!currentTeam) {
+    }
+    var {name, city, id} =
+      teamState && currentTeam ? currentTeam : teamState.teams[customTeamKey];
+  } else {
+    var {name, city, id} = '';
+  }
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('EDIT SCREEN START');
-    console.log('customTeamKey ', customTeamKey);
-    console.log('teamState ', teamState);
-    console.log('teamState.teams ', teamState.teams);
-    console.log(
-      'Edit Screen teamState players',
-      teamState.teams[customTeamKey].players,
-    );
-    console.log('XXXXXX');
-    console.log(name, city, id);
-    console.log('EDIT SCREEN END');
     getPlayerCount();
-  }, [city, customTeamKey, getPlayerCount, id, name, teamState]);
+    getCurrentTeam();
+  }, [currentTeam, customTeamKey, getCurrentTeam, getPlayerCount, teamState]);
+
+  const getCurrentTeam = useCallback(() => {
+    if (teamState.teams) {
+      teamState.teams.map(team => {
+        if (team.id === customTeamId) {
+          setCurrentTeam(team);
+        }
+      });
+    }
+  }, [customTeamId, teamState.teams]);
 
   const handleAddPlayer = () => {
     navigation.navigate('Team Selection', {
@@ -37,27 +53,15 @@ const EditScreen = ({route, navigation}) => {
   };
 
   const getPlayerCount = useCallback(() => {
-    console.log('getPlayerCount ', teamState);
-    if (teamState.teams) {
-      console.log(
-        'PLAYER COUNT  ',
-        teamState.teams[customTeamKey].players.length,
-      );
-      let playerCount = teamState.teams[customTeamKey].players.length;
+    if (currentTeam) {
+      let playerCount = teamState.teams && currentTeam.players.length;
       playerCount === 5
         ? setIsAddPlayerButtonDisabled(true)
         : setIsAddPlayerButtonDisabled(false);
-      // if (playerCount === 5) {
-      //   // disable add player button
-      //   setIsAddPlayerButtonActive(false);
-      // } else {
-      //   setIsAddPlayerButtonActive(true);
-      // }
     }
-  }, [customTeamKey, teamState]);
+  }, [currentTeam, teamState.teams]);
 
   const handleClearAll = () => {
-    console.log('Clear all');
     dispatch(
       removeAllPlayers({
         players: [],
@@ -67,11 +71,31 @@ const EditScreen = ({route, navigation}) => {
     );
   };
 
+  const handleEditTeamModal = () => {
+    dispatch(
+      editTeam({
+        name: editTeamName,
+        city: editTeamCity,
+        customTeamId,
+        customTeamKey,
+      }),
+    );
+    setEditTeamName('');
+    setEditTeamCity('');
+    hideModal();
+  };
+
+  const handleCloseModal = () => {
+    setEditTeamName('');
+    setEditTeamCity('');
+    hideModal();
+  };
+
   const renderItem = ({item}) => {
     return (
       <PlayerCard
         player={item}
-        teamName={teamState && teamState.teams[customTeamKey].name}
+        teamName={teamState && currentTeam.name}
         navigation={navigation}
         customTeamId={customTeamId}
         customTeamKey={customTeamKey}
@@ -81,54 +105,108 @@ const EditScreen = ({route, navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TeamCard
-        teamName={name}
-        teamId={id}
-        city={city}
-        navigation={navigation}
-        screen={'Edit'}
-      />
-      <View style={styles.buttonContainer}>
-        {/* TODO: Could be resuable component - also used in Edit Screen */}
-        <Button
-          style={[
-            styles.newTeam,
-            isAddPlayerButtonDisabled && {backgroundColor: '#D3D3D3'},
-          ]}
-          labelStyle={{fontSize: 14}}
-          icon="account"
-          mode="contained"
-          onPress={handleAddPlayer}
-          disabled={isAddPlayerButtonDisabled}>
-          Add Player
-        </Button>
-        <Button
-          style={styles.clear}
-          labelStyle={{fontSize: 14}}
-          icon="axe"
-          mode="contained"
-          onPress={handleClearAll}>
-          Clear All
-        </Button>
-      </View>
-      {teamState.error ? (
-        <Text>There was an error.</Text>
-      ) : teamState.isLoading ? (
-        <Text>Loading...</Text>
-      ) : teamState ? (
-        <View style={{flex: 1}}>
-          {teamState.teams[customTeamKey] && (
-            <FlatList
-              data={teamState && teamState.teams[customTeamKey].players}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-              contentContainerStyle={{paddingVertical: 10}}
-            />
+    <>
+      {/* TODO: Modal may need to be a common component, also used in HomeScreen */}
+      <Provider>
+        <Portal>
+          <Modal
+            visible={visible}
+            onDismiss={hideModal}
+            style={styles.modalContainer}
+            contentContainerStyle={styles.modalContent}>
+            <View>
+              {/* TODO: Add validation - no empty strings, max char */}
+              <TextInput
+                label="Team Name"
+                value={editTeamName}
+                onChangeText={value => setEditTeamName(value)}
+                style={styles.modalInput}
+                maxLength={20}
+              />
+              <TextInput
+                label="City Name"
+                value={editTeamCity}
+                onChangeText={value => setEditTeamCity(value)}
+                style={styles.modalInput}
+                maxLength={20}
+              />
+              <View style={styles.modalButtonContainer}>
+                <Button
+                  style={styles.modalNewTeam}
+                  icon="account-group"
+                  mode="contained"
+                  onPress={handleEditTeamModal}>
+                  Update
+                </Button>
+                <Button
+                  style={styles.modalClear}
+                  icon="axe"
+                  mode="contained"
+                  onPress={handleCloseModal}>
+                  Cancel
+                </Button>
+              </View>
+            </View>
+          </Modal>
+        </Portal>
+
+        <View style={styles.container}>
+          {teamState.teams.length >= 1 && currentTeam && (
+            <>
+              <TeamCard
+                teamName={name}
+                teamId={id}
+                city={city}
+                navigation={navigation}
+                screen={'Edit'}
+                showModal={showModal}
+              />
+              <View style={styles.buttonContainer}>
+                {/* TODO: Could be resuable component - also used in Edit Screen */}
+                <Button
+                  style={[
+                    styles.newTeam,
+                    isAddPlayerButtonDisabled && {
+                      backgroundColor: '#D3D3D3',
+                    },
+                  ]}
+                  labelStyle={{fontSize: 14}}
+                  icon="account"
+                  mode="contained"
+                  onPress={handleAddPlayer}
+                  disabled={isAddPlayerButtonDisabled}>
+                  Add Player
+                </Button>
+                <Button
+                  style={styles.clear}
+                  labelStyle={{fontSize: 14}}
+                  icon="axe"
+                  mode="contained"
+                  onPress={handleClearAll}>
+                  Clear All
+                </Button>
+              </View>
+            </>
           )}
+          {teamState.error ? (
+            <Text>There was an error.</Text>
+          ) : teamState.isLoading ? (
+            <Text>Loading...</Text>
+          ) : teamState ? (
+            <View style={{flex: 1}}>
+              {currentTeam && (
+                <FlatList
+                  data={currentTeam.players}
+                  renderItem={renderItem}
+                  keyExtractor={item => item.id}
+                  contentContainerStyle={{paddingVertical: 10}}
+                />
+              )}
+            </View>
+          ) : null}
         </View>
-      ) : null}
-    </View>
+      </Provider>
+    </>
   );
 };
 
@@ -140,7 +218,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    // backgroundColor: 'blue',
     paddingTop: 15,
     paddingBottom: 25,
   },
@@ -148,6 +225,34 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
   clear: {
+    backgroundColor: 'red',
+  },
+  // MODAL Same css as HOMESCREEN
+  modalContainer: {
+    flex: 1,
+    backgroundColor: '#fafafa',
+    margin: Platform.OS === 'ios' ? 45 : 30,
+    width: 300,
+    height: 300,
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
+  modalContent: {
+    padding: 10,
+  },
+  modalInput: {
+    margin: 5,
+    marginBottom: 15,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    paddingTop: 20,
+  },
+  modalNewTeam: {
+    backgroundColor: 'green',
+  },
+  modalClear: {
     backgroundColor: 'red',
   },
 });

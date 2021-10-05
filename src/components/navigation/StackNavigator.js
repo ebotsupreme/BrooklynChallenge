@@ -12,17 +12,16 @@ const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Edit" component={EditScreen} />
-        <Stack.Screen
-          name="Player Selection"
-          component={PlayerSelectionScreen}
-        />
-        <Stack.Screen name="Team Selection" component={TeamSelectionScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator
+    // screenOptions={{
+    //   headerShown: false,
+    // }}
+    >
+      <Stack.Screen name="Add Team" component={HomeScreen} />
+      <Stack.Screen name="Edit Team" component={EditScreen} />
+      <Stack.Screen name="Player Selection" component={PlayerSelectionScreen} />
+      <Stack.Screen name="Team Selection" component={TeamSelectionScreen} />
+    </Stack.Navigator>
   );
 };
 

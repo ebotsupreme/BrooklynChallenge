@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -31,38 +30,21 @@ const BottomTabNavigator = () => {
         name="Player Selection"
         component={PlayerSelectionScreen}
         options={{
-          tabBarLabel: 'Players',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="account-multiple"
-              color={color}
-              size={size}
-            />
-          ),
+          tabBarItemStyle: {display: 'none'},
         }}
       />
       <Tab.Screen
         name="Team Selection"
         component={TeamSelectionScreen}
         options={{
-          tabBarLabel: 'Teams',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="account-group"
-              color={color}
-              size={size}
-            />
-          ),
+          tabBarItemStyle: {display: 'none'},
         }}
       />
       <Tab.Screen
         name="Edit Team"
         component={EditScreen}
         options={{
-          tabBarLabel: 'Edit Team',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
-          ),
+          tabBarItemStyle: {display: 'none'},
         }}
       />
     </Tab.Navigator>
