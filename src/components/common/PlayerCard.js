@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet, View, Image} from 'react-native';
-import {Card, IconButton, Colors} from 'react-native-paper';
+import {Text, StyleSheet, View, Image, Platform} from 'react-native';
+import {Card, IconButton} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   startLoading,
@@ -105,14 +105,14 @@ const PlayerCard = ({
                 <Text style={styles.titleStat}>
                   <Text style={styles.statName}>Position:</Text> {position}
                 </Text>
-                <Text style={[styles.titleStat, {fontSize: 14}]}>
+                <Text style={[styles.titleStat, {fontSize: 13}]}>
                   {nbaTeam}
                 </Text>
               </View>
               <View style={styles.removePlayerButtonContainer}>
                 <IconButton
                   icon="account-remove"
-                  color={Colors.red500}
+                  color={'#072F5F'}
                   size={26}
                   onPress={handleRemovePlayer}
                 />
@@ -173,9 +173,11 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   viewContainer: {
-    backgroundColor: 'blue',
     flexDirection: 'row',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#072F5F',
+    borderRadius: 5,
   },
   jersyContainer: {
     position: 'absolute',
@@ -186,9 +188,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   jersey: {
-    fontSize: 40,
-    borderWidth: 1,
-    borderColor: 'black',
+    fontSize: 28,
+    borderWidth: 2,
+    borderColor: '#072F5F',
     borderRadius: 15,
     minWidth: 50,
     padding: 2,
@@ -196,7 +198,6 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    backgroundColor: 'yellow',
     alignItems: 'flex-start',
     padding: 5,
     fontWeight: '600',
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: '800',
-    marginTop: 5,
+    marginTop: Platform.OS === 'ios' ? 20 : 15,
   },
   titleStat: {
     fontSize: 16,
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 15,
+    marginBottom: Platform.OS === 'ios' ? 25 : 20,
   },
   nameEditMode: {
     fontSize: 18,
@@ -245,18 +246,18 @@ const styles = StyleSheet.create({
   jerseyEditMode: {
     fontSize: 18,
     fontWeight: '600',
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#072F5F',
+    borderRadius: 5,
     width: 22,
     padding: 2,
     textAlign: 'center',
   },
   removePlayerButtonContainer: {
     position: 'absolute',
-    top: 52,
+    top: Platform.OS === 'ios' ? 53 : 55,
     left: 0,
-    right: 2,
+    right: Platform.OS === 'ios' ? -6 : -6,
     bottom: 0,
     alignItems: 'flex-end',
   },

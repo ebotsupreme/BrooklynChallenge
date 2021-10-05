@@ -1,21 +1,22 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, StyleSheet, FlatList, Platform, Share} from 'react-native';
+import {View, StyleSheet, FlatList, Platform, Share} from 'react-native';
 import {
   Button,
   Modal,
   Portal,
   TextInput,
   Provider,
-  IconButton,
-  Colors,
+  Card,
 } from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
+
 import {
   startLoading,
   hasError,
   addTeam,
   removeAllTeams,
 } from '../../features/team/teamSlice';
+
 import TeamCard from '../common/TeamCard';
 
 const HomeScreen = ({route, navigation}) => {
@@ -135,18 +136,22 @@ const HomeScreen = ({route, navigation}) => {
             <View>
               {/* TODO: Add validation - no empty strings */}
               <TextInput
+                theme={{colors: {primary: '#072F5F'}}}
                 label="Team Name"
                 value={teamName}
                 onChangeText={value => setTeamName(value)}
                 style={styles.modalInput}
                 maxLength={20}
+                mode="outlined"
               />
               <TextInput
+                theme={{colors: {primary: '#072F5F'}}}
                 label="City Name"
                 value={cityName}
                 onChangeText={value => setCityName(value)}
                 style={styles.modalInput}
                 maxLength={20}
+                mode="outlined"
               />
               <View style={styles.modalButtonContainer}>
                 <Button
@@ -167,7 +172,6 @@ const HomeScreen = ({route, navigation}) => {
             </View>
           </Modal>
         </Portal>
-
         <View style={styles.buttonContainer}>
           {/* TODO: Could be resuable component - also used in Edit Screen */}
           <Button
@@ -192,7 +196,7 @@ const HomeScreen = ({route, navigation}) => {
           {Platform.OS === 'android' && (
             <Button
               icon="share-variant"
-              color={Colors.red500}
+              color="#072F5F"
               mode="contained"
               onPress={handleShareButton}
               style={{paddingLeft: 10, width: 50}}
@@ -243,13 +247,13 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   newTeam: {
-    backgroundColor: 'green',
+    backgroundColor: '#3895D3',
   },
   clear: {
-    backgroundColor: 'red',
+    backgroundColor: '#1261A0',
   },
   teamCardsContainer: {
     margin: 10,

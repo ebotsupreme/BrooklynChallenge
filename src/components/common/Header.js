@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, Platform, Share} from 'react-native';
-import {IconButton, Colors} from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
-import Logo from './Logo';
 
 const Header = props => {
   const [message, setMessage] = useState([]);
@@ -38,12 +37,13 @@ const Header = props => {
         <View style={styles.shareButtonContainer}>
           <IconButton
             icon="share-variant"
-            color={Colors.red500}
+            color={'#072F5F'}
             size={20}
             onPress={handleShareButton}
           />
         </View>
       )}
+      {/* TODO: needs implementation on Android - currently disabled */}
       {/* <Logo props={props.children} /> */}
       <Text style={styles.homePageHeaderTitle}>{props.children}</Text>
     </View>
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'blue',
   },
   homePageHeaderTitle: {
     fontSize: 18,
@@ -66,7 +65,6 @@ const styles = StyleSheet.create({
     right: Platform.OS === 'ios' ? -125 : -270,
     alignItems: 'center',
     width: 50,
-    backgroundColor: 'grey',
   },
 });
 

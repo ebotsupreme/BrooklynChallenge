@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Text, Dimensions} from 'react-native';
+import {TabView, TabBar} from 'react-native-tab-view';
+
 import {useGetAllTeamsQuery} from '../../services/teams';
-import {TabView} from 'react-native-tab-view';
+
 import West from './West';
 import East from './East';
 
@@ -66,6 +68,16 @@ const TeamSelectionScreen = ({route, navigation}) => {
     }
   };
 
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      indicatorStyle={{backgroundColor: '#58CCED'}}
+      style={{backgroundColor: '#072F5F'}}
+      activeColor={'#58CCED'}
+      inactiveColor={'#1261A0'}
+    />
+  );
+
   return (
     <>
       {error ? (
@@ -79,6 +91,7 @@ const TeamSelectionScreen = ({route, navigation}) => {
             renderScene={renderScene}
             onIndexChange={setIndex}
             initialLayout={initialLayout}
+            renderTabBar={renderTabBar}
           />
         </>
       ) : null}

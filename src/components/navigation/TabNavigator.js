@@ -2,12 +2,12 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import Header from '../common/Header';
+
 import HomeScreen from '../screens/HomeScreen';
 import EditScreen from '../screens/EditScreen';
 import PlayerSelectionScreen from '../screens/PlayerSelectionScreen';
 import TeamSelectionScreen from '../screens/TeamSelectionScreen';
-import Header from '../common/Header';
-import Logo from '../common/Logo';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,9 +23,12 @@ const BottomTabNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+          tabBarIcon: ({size}) => (
+            <MaterialCommunityIcons name="home" color="#072F5F" size={size} />
           ),
+          tabBarLabelStyle: {
+            color: '#072F5F',
+          },
           headerTitle: props => <Header {...props} />,
         }}
       />
@@ -34,7 +37,6 @@ const BottomTabNavigator = () => {
         component={PlayerSelectionScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          // headerTitle: props => <Header {...props} />,
         }}
       />
       <Tab.Screen
@@ -42,7 +44,6 @@ const BottomTabNavigator = () => {
         component={TeamSelectionScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          // headerTitle: props => <Header {...props} />,
         }}
       />
       <Tab.Screen
@@ -50,7 +51,6 @@ const BottomTabNavigator = () => {
         component={EditScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          // headerTitle: props => <Header {...props} />,
         }}
       />
     </Tab.Navigator>
