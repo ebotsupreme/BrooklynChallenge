@@ -63,7 +63,12 @@ export const teamSlice = createSlice({
     addPlayer: (state, action) => {
       state.teams.map(team => {
         if (team.id === action.payload.customTeamId) {
-          return (team.players = [...team.players, action.payload]);
+          // NOTE: Check for duplicate players
+          if (team.players.find(player => player.id === action.payload.id)) {
+            return (team.players = [...team.players]);
+          } else {
+            return (team.players = [...team.players, action.payload]);
+          }
         }
       });
       state.isLoading = false;
@@ -89,6 +94,28 @@ export const teamSlice = createSlice({
       state.isLoading = false;
       state.isLoaded = true;
     },
+    // checkForExistingPlayer: (state, action) => {
+    //   state.teams.map(team => {
+    //     // check for duplicates
+    //     console.log('team ', team);
+    //     console.log('team.players ', team.players);
+    //     if (team.id === action.payload.customTeamId) {
+    //       team.players.map(player => {
+    //         console.log('player ', player);
+    //         if (player.id === action.payload.id) {
+    //           console.log('found match');
+    //           state.hasError = 'Duplicate player found.';
+    //           return (team.players = [...team.players]);
+    //         }
+    //       });
+    //     }
+
+    //     if (team.id === action.payload.customTeamId) {
+    //       return (team.players = [...team.players, action.payload]);
+    //     }
+    //     console.log('team.players after adding: ', team.players);
+    //   });
+    // }
   },
 });
 
