@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+
 import {useGetAllPlayersQuery} from '../../services/players';
+
 import PlayerCard from '../common/PlayerCard';
 
 const PlayerSelectionScreen = ({route, navigation}) => {
@@ -48,7 +50,8 @@ const PlayerSelectionScreen = ({route, navigation}) => {
         <Text>There was an error.</Text>
       ) : isLoading ? (
         <Text>Loading...</Text>
-      ) : data ? (
+      ) : players ? (
+        // TODO: look into delay when changing teams
         <View style={styles.container}>
           {players && (
             <FlatList

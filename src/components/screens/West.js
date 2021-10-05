@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
+
 import TeamCard from '../common/TeamCard';
 
 const West = ({data, customTeamId, customTeamKey, navigation}) => {

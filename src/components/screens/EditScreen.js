@@ -1,8 +1,10 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList, Platform} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {removeAllPlayers, editTeam} from '../../features/team/teamSlice';
 import {Button, Portal, Modal, TextInput, Provider} from 'react-native-paper';
+
+import {removeAllPlayers, editTeam} from '../../features/team/teamSlice';
+
 import TeamCard from '../common/TeamCard';
 import PlayerCard from '../common/PlayerCard';
 
@@ -10,8 +12,6 @@ const EditScreen = ({route, navigation}) => {
   const [isAddPlayerButtonDisabled, setIsAddPlayerButtonDisabled] =
     useState(false);
   const [visible, setVisible] = useState(false);
-  const [editTeamName, setEditTeamName] = useState('');
-  const [editTeamCity, setEditTeamCity] = useState('');
   const [currentTeam, setCurrentTeam] = useState(null);
   const teamState = useSelector(state => state.team);
   const {customTeamId, customTeamKey} = route.params;
@@ -27,6 +27,9 @@ const EditScreen = ({route, navigation}) => {
   } else {
     var {name, city, id} = '';
   }
+
+  const [editTeamName, setEditTeamName] = useState(name);
+  const [editTeamCity, setEditTeamCity] = useState(city);
 
   const dispatch = useDispatch();
 
@@ -115,20 +118,24 @@ const EditScreen = ({route, navigation}) => {
             style={styles.modalContainer}
             contentContainerStyle={styles.modalContent}>
             <View>
-              {/* TODO: Add validation - no empty strings, max char */}
+              {/* TODO: Add validation - no empty strings */}
               <TextInput
+                theme={{colors: {primary: '#072F5F'}}}
                 label="Team Name"
                 value={editTeamName}
                 onChangeText={value => setEditTeamName(value)}
                 style={styles.modalInput}
                 maxLength={20}
+                mode="outlined"
               />
               <TextInput
+                theme={{colors: {primary: '#072F5F'}}}
                 label="City Name"
                 value={editTeamCity}
                 onChangeText={value => setEditTeamCity(value)}
                 style={styles.modalInput}
                 maxLength={20}
+                mode="outlined"
               />
               <View style={styles.modalButtonContainer}>
                 <Button
@@ -222,10 +229,10 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
   },
   newTeam: {
-    backgroundColor: 'green',
+    backgroundColor: '#3895D3',
   },
   clear: {
-    backgroundColor: 'red',
+    backgroundColor: '#1261A0',
   },
   // MODAL Same css as HOMESCREEN
   modalContainer: {
@@ -250,10 +257,10 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   modalNewTeam: {
-    backgroundColor: 'green',
+    backgroundColor: '#3895D3',
   },
   modalClear: {
-    backgroundColor: 'red',
+    backgroundColor: '#1261A0',
   },
 });
 
