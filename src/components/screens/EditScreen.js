@@ -148,7 +148,7 @@ const EditScreen = ({route, navigation}) => {
                   icon="account-group"
                   mode="contained"
                   onPress={handleEditTeamModal}>
-                  Edit
+                  Update
                 </Button>
                 <Button
                   style={styles.modalClear}
@@ -163,19 +163,6 @@ const EditScreen = ({route, navigation}) => {
         </Portal>
 
         <View style={styles.container}>
-          {/* {customTeamKey !== undefined ? (
-            <>
-              <TeamCard
-                teamName={teamState.teams[customTeamKey].name}
-                teamId={teamState.teams[customTeamKey].id}
-                city={teamState.teams[customTeamKey].city}
-                navigation={navigation}
-                screen={'Edit'}
-              />
-            </>
-          ) : (
-            <></>
-          )} */}
           {teamState.teams.length >= 1 && teamState.teams[customTeamKey] && (
             <>
               {/* TODO: possible idea - pass teamState.teams[customTeamKey].name isntead of name to TeamCard */}
@@ -185,6 +172,7 @@ const EditScreen = ({route, navigation}) => {
                 city={city}
                 navigation={navigation}
                 screen={'Edit'}
+                showModal={showModal}
               />
               <View style={styles.buttonContainer}>
                 {/* TODO: Could be resuable component - also used in Edit Screen */}
