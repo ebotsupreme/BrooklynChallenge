@@ -2,7 +2,12 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
-import {startLoading, hasError, addTeam} from '../../features/team/teamSlice';
+import {
+  startLoading,
+  hasError,
+  addTeam,
+  removeAllTeams,
+} from '../../features/team/teamSlice';
 import TeamCard from '../common/TeamCard';
 
 const HomeScreen = ({route, navigation}) => {
@@ -94,6 +99,11 @@ const HomeScreen = ({route, navigation}) => {
 
   const handleClearTeam = () => {
     console.log('HANDLE CLEAR TEAM');
+    dispatch(
+      removeAllTeams({
+        teams: [],
+      }),
+    );
   };
 
   const handleCloseModal = () => {

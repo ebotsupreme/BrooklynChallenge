@@ -5,10 +5,6 @@ const initialState = {
   isLoaded: false,
   error: false,
   teamCount: 0,
-  activeTeams: [],
-  teamOneIsActive: false,
-  teamTwoIsActive: false,
-  teamThreeIsActive: false,
   teams: [],
 };
 
@@ -32,6 +28,7 @@ export const teamSlice = createSlice({
       state.teams = [...state.teams, action.payload];
       state.teamCount += 1;
       state.isLoading = false;
+      state.isLoaded = true;
     },
     removeTeam: (state, action) => {
       if (state.teams.length === 1) {
@@ -49,12 +46,20 @@ export const teamSlice = createSlice({
       // state.teams[action.payload.customTeamKey] = action.payload.team;
       state.teamCount -= 1;
       state.isLoading = false;
+      state.isLoaded = true;
       console.log('state', state);
+    },
+    removeAllTeams: (state, action) => {
+      state.teams = action.payload.teams;
+      state.teamCount = 0;
+      state.isLoading = false;
+      state.isLoaded = true;
     },
     editTeam: (state, action) => {
       state.teams[action.payload.customTeamKey].name = action.payload.name;
       state.teams[action.payload.customTeamKey].city = action.payload.city;
       state.isLoading = false;
+      state.isLoaded = true;
     },
     addPlayer: (state, action) => {
       state.teams[action.payload.customTeamKey].players = [
@@ -62,17 +67,20 @@ export const teamSlice = createSlice({
         action.payload,
       ];
       state.isLoading = false;
+      state.isLoaded = true;
     },
     removePlayer: (state, action) => {
       state.teams[action.payload.customTeamKey].players = state.teams[
         action.payload.customTeamKey
       ].players.filter(player => player.id !== action.payload.id);
       state.isLoading = false;
+      state.isLoaded = true;
     },
     removeAllPlayers: (state, action) => {
       state.teams[action.payload.customTeamKey].players =
         action.payload.players;
       state.isLoading = false;
+      state.isLoaded = true;
     },
   },
 });
@@ -89,6 +97,7 @@ export const {
   removePlayer,
   removeAllPlayers,
   editTeam,
+  removeAllTeams,
 } = teamSlice.actions;
 
 export default teamSlice.reducer;
