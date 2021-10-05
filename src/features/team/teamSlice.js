@@ -39,17 +39,17 @@ export const teamSlice = createSlice({
         state.teams = action.payload.team;
       } else {
         console.log('REMOVE TEAM length greater than 1, start filter ');
-        state.teams[action.payload.customTeamKey] = state.teams[
-          action.payload.customTeamKey
-        ].length = 0;
+        // state.teams[action.payload.customTeamKey] = state.teams[
+        //   action.payload.customTeamKey
+        // ].length = 0;
         state.teams = state.teams.filter(
           team => team.id !== action.payload.customTeamId,
         );
-        console.log('state', state);
       }
       // state.teams[action.payload.customTeamKey] = action.payload.team;
       state.teamCount -= 1;
       state.isLoading = false;
+      console.log('state', state);
     },
     editTeam: (state, action) => {
       state.teams[action.payload.customTeamKey].name = action.payload.name;
