@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
 import {useGetAllPlayersQuery} from '../../services/players';
 import PlayerCard from '../common/PlayerCard';
 
@@ -9,7 +8,6 @@ const PlayerSelectionScreen = ({route, navigation}) => {
   const {selectedTeamName, selectedTeamId, customTeamId, customTeamKey} =
     route.params;
   const {data, isLoading, error} = useGetAllPlayersQuery(selectedTeamName);
-  const teamState = useSelector(state => state.team);
 
   useEffect(() => {
     if (data && data.league) {

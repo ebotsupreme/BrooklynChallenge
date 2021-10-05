@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -7,7 +6,6 @@ import HomeScreen from '../screens/HomeScreen';
 import EditScreen from '../screens/EditScreen';
 import PlayerSelectionScreen from '../screens/PlayerSelectionScreen';
 import TeamSelectionScreen from '../screens/TeamSelectionScreen';
-// import StackNavigator from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
 

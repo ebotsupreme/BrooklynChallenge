@@ -2,15 +2,7 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList, Platform} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeAllPlayers, editTeam} from '../../features/team/teamSlice';
-import {
-  Button,
-  IconButton,
-  Colors,
-  Portal,
-  Modal,
-  TextInput,
-  Provider,
-} from 'react-native-paper';
+import {Button, Portal, Modal, TextInput, Provider} from 'react-native-paper';
 import TeamCard from '../common/TeamCard';
 import PlayerCard from '../common/PlayerCard';
 
@@ -27,53 +19,27 @@ const EditScreen = ({route, navigation}) => {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
-  console.log(
-    'teamState.teams.length && customTeamKey && teamState.teams[customTeamKey]',
-    teamState.teams[customTeamKey],
-  );
-  // if (teamState.teams[customTeamKey] !== undefined) {
-  //   var {name, city, id} = teamState && teamState.teams[customTeamKey];
   if (currentTeam !== undefined) {
     if (!currentTeam) {
     }
     var {name, city, id} =
       teamState && currentTeam ? currentTeam : teamState.teams[customTeamKey];
-    // if (teamState && teamState.teams[customTeamKey]) {
-    //   console.log('CURRENT TEAM EDIT customTeamKey , ', customTeamKey);
-    //   var {name, city, id} = teamState && teamState.teams[customTeamKey];
-    // } else {
-    //   console.log('CURRENT TEAM EDIT, ', currentTeam);
-    //   var {name, city, id} = teamState && currentTeam;
-    // }
   } else {
     var {name, city, id} = '';
   }
-  // const {name, city, id} = teamState && teamState.teams[customTeamKey];
-  // const {name, city, id} =
-  //   teamState.teams.length && teamState.teams[customTeamKey];
-  // const {name, city, id} = customTeamKey && teamState.teams[customTeamKey];
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     getPlayerCount();
-    console.log('EDIT customTeamKey', customTeamKey);
-    console.log('EDIT teams ', teamState.teams);
-    console.log('EDIT teams [customTeamKey]', teamState.teams[customTeamKey]);
-    // console.log('Edit name ', name);
-    // console.log('Edit city ', city);
-    // console.log('Edit id ', id);
-    // console.log('showEditModal ', showEditModal);
     getCurrentTeam();
-    console.log('current team is ', currentTeam);
   }, [currentTeam, customTeamKey, getCurrentTeam, getPlayerCount, teamState]);
 
   const getCurrentTeam = useCallback(() => {
     if (teamState.teams) {
       teamState.teams.map(team => {
         if (team.id === customTeamId) {
-          console.log('EDIT SCREEN TEAMMATCH ', team);
           setCurrentTeam(team);
-          // return team;
         }
       });
     }
@@ -96,7 +62,6 @@ const EditScreen = ({route, navigation}) => {
   }, [currentTeam, teamState.teams]);
 
   const handleClearAll = () => {
-    console.log('Clear all');
     dispatch(
       removeAllPlayers({
         players: [],
@@ -107,8 +72,6 @@ const EditScreen = ({route, navigation}) => {
   };
 
   const handleEditTeamModal = () => {
-    console.log('handleEditTeamModal ', editTeamName, editTeamCity);
-    // dispatch edit team here
     dispatch(
       editTeam({
         name: editTeamName,
@@ -123,7 +86,6 @@ const EditScreen = ({route, navigation}) => {
   };
 
   const handleCloseModal = () => {
-    console.log('handleCloseModal');
     setEditTeamName('');
     setEditTeamCity('');
     hideModal();
@@ -133,7 +95,6 @@ const EditScreen = ({route, navigation}) => {
     return (
       <PlayerCard
         player={item}
-        // teamName={teamState && teamState.teams[customTeamKey].name}
         teamName={teamState && currentTeam.name}
         navigation={navigation}
         customTeamId={customTeamId}
@@ -190,10 +151,8 @@ const EditScreen = ({route, navigation}) => {
         </Portal>
 
         <View style={styles.container}>
-          {/* {teamState.teams.length >= 1 && teamState.teams[customTeamKey] && ( */}
           {teamState.teams.length >= 1 && currentTeam && (
             <>
-              {/* TODO: possible idea - pass teamState.teams[customTeamKey].name isntead of name to TeamCard */}
               <TeamCard
                 teamName={name}
                 teamId={id}
@@ -235,7 +194,6 @@ const EditScreen = ({route, navigation}) => {
             <Text>Loading...</Text>
           ) : teamState ? (
             <View style={{flex: 1}}>
-              {/* {teamState.teams[customTeamKey] && ( */}
               {currentTeam && (
                 <FlatList
                   data={currentTeam.players}
@@ -260,7 +218,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    // backgroundColor: 'blue',
     paddingTop: 15,
     paddingBottom: 25,
   },
@@ -274,9 +231,6 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: '#fafafa',
-    // margin: 40,
-    // marginTop: 190,
-    // marginBottom: 190,
     margin: Platform.OS === 'ios' ? 45 : 30,
     width: 300,
     height: 300,
@@ -295,10 +249,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     paddingTop: 20,
   },
-  // buttonContainer: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-evenly',
-  // },
   modalNewTeam: {
     backgroundColor: 'green',
   },

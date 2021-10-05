@@ -26,17 +26,11 @@ const HomeScreen = ({route, navigation}) => {
     getTeamCount();
   }, [getTeamCount, teamState]);
 
-  // console.log('HOME teamState', teamState);
-  // console.log('HOME teamState.teams', teamState.teams);
-  // console.log('HOME teamState.teams.length', teamState.teams.length);
-
   const handleAddTeam = () => {
     let customTeamId = '';
     let customTeamKey = '';
 
     if (teamState.teamCount === 3) {
-      console.log('three', teamState.teamCount);
-      // TODO: modal is still open here. need to resolve.
       return;
     }
 
@@ -52,53 +46,6 @@ const HomeScreen = ({route, navigation}) => {
     customTeamKey = teamState.teamKeyCount;
     customTeamId = teamState.teamIdCount + 1;
 
-    // TODO: may have to refactor to loop teams
-    // check for active teams
-    // set team state
-    // switch (teamState.teamCount) {
-    //   case 0:
-    //     dispatch(
-    //       addTeam({
-    //         key: 0,
-    //         id: 1,
-    //         name: teamName,
-    //         city: cityName,
-    //         players: [],
-    //       }),
-    //     );
-    //     customTeamId = 1;
-    //     customTeamKey = 0;
-    //     break;
-    //   case 1:
-    //     dispatch(
-    //       addTeam({
-    //         key: 1,
-    //         id: 2,
-    //         name: teamName,
-    //         city: cityName,
-    //         players: [],
-    //       }),
-    //     );
-    //     customTeamId = 2;
-    //     customTeamKey = 1;
-    //     break;
-    //   case 2:
-    //     dispatch(
-    //       addTeam({
-    //         key: 2,
-    //         id: 3,
-    //         name: teamName,
-    //         city: cityName,
-    //         players: [],
-    //       }),
-    //     );
-    //     customTeamId = 3;
-    //     customTeamKey = 2;
-    //     break;
-    //   default:
-    //     break;
-    // }
-
     setTeamName('');
     setCityName('');
     hideModal();
@@ -110,7 +57,6 @@ const HomeScreen = ({route, navigation}) => {
   };
 
   const handleClearTeam = () => {
-    console.log('HANDLE CLEAR TEAM');
     dispatch(
       removeAllTeams({
         teams: [],
@@ -119,7 +65,6 @@ const HomeScreen = ({route, navigation}) => {
   };
 
   const handleCloseModal = () => {
-    console.log('handleCloseModal');
     setTeamName('');
     setCityName('');
     hideModal();
@@ -127,7 +72,6 @@ const HomeScreen = ({route, navigation}) => {
 
   const getTeamCount = useCallback(() => {
     let teamCount = teamState.teams && teamState.teams.length;
-    console.log('GETTEAMCOUNT ', teamCount);
     teamCount === 3
       ? setIsAddNewTeamButtonDisabled(true)
       : setIsAddNewTeamButtonDisabled(false);
@@ -155,7 +99,7 @@ const HomeScreen = ({route, navigation}) => {
             style={styles.modalContainer}
             contentContainerStyle={styles.modalContent}>
             <View>
-              {/* TODO: Add validation - no empty strings, max char */}
+              {/* TODO: Add validation - no empty strings */}
               <TextInput
                 label="Team Name"
                 value={teamName}
@@ -236,13 +180,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fafafa',
     margin: Platform.OS === 'ios' ? 45 : 30,
-    // marginTop: 190,
-    // marginBottom: 190,
     width: 300,
     height: 300,
     justifyContent: 'center',
-    // alignItems: 'center',
-
     borderRadius: 10,
   },
   modalContent: {

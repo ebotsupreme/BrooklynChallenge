@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Text, StyleSheet, View, Platform} from 'react-native';
-import {Card, IconButton, Colors, Provider} from 'react-native-paper';
+import {Card, IconButton, Colors} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useSelector, useDispatch} from 'react-redux';
-import {removeTeam, editTeam} from '../../features/team/teamSlice';
+import {useDispatch} from 'react-redux';
+import {removeTeam} from '../../features/team/teamSlice';
 
 const TeamCard = ({
   teamName,
@@ -18,7 +18,6 @@ const TeamCard = ({
   const dispatch = useDispatch();
 
   const handleEditTeamModal = () => {
-    console.log('handleEditTeamModal');
     navigation.navigate('Edit Team', {
       name: teamName,
       city: city,
@@ -38,7 +37,6 @@ const TeamCard = ({
   };
 
   const handleRemoveTeam = () => {
-    console.log('handleRemoveTeam');
     dispatch(
       removeTeam({
         name: teamName,
@@ -47,7 +45,6 @@ const TeamCard = ({
         customTeamKey,
       }),
     );
-    console.log('handleREmoveTEam ', customTeamId, ' ', customTeamKey);
     navigation.navigate('Home', {
       customTeamId,
       customTeamKey,
@@ -55,7 +52,6 @@ const TeamCard = ({
   };
 
   const handleEditTeam = () => {
-    console.log('handleEditTeam');
     showModal();
   };
 
@@ -191,9 +187,7 @@ const styles = StyleSheet.create({
   },
   homeEditTeamButtonContainer: {
     position: 'absolute',
-    // top: 53,
     top: Platform.OS === 'ios' ? 53 : 40,
-    // right: 80,
     right: Platform.OS === 'ios' ? 80 : 70,
     bottom: 10,
     alignItems: 'flex-end',
@@ -203,8 +197,6 @@ const styles = StyleSheet.create({
   removeTeamContainer: {
     position: 'absolute',
     top: Platform.OS === 'ios' ? 53 : 40,
-    // top: 53,
-    // right: 15,
     right: Platform.OS === 'ios' ? 15 : 5,
     bottom: 10,
     alignItems: 'flex-end',
@@ -214,10 +206,8 @@ const styles = StyleSheet.create({
   editTeamButtonContainer: {
     position: 'absolute',
     top: Platform.OS === 'ios' ? 53 : 45,
-    // top: 53,
     right: 15,
-    // bottom: 10,
-    bottom: Platform.OS === 'android' ? 10 : 'none',
+    bottom: Platform.OS === 'android' ? 10 : 0,
     alignItems: 'flex-end',
     width: 50,
     backgroundColor: 'yellow',

@@ -58,12 +58,6 @@ const PlayerCard = ({
   };
 
   const handleRemovePlayer = () => {
-    console.log(
-      'handleRemovePlayer - customTeamId, playerId, playerName: ',
-      customTeamId,
-      id,
-      name,
-    );
     dispatch(
       removePlayer({
         id,
@@ -193,7 +187,6 @@ const styles = StyleSheet.create({
   },
   jersey: {
     fontSize: 40,
-    // backgroundColor: 'red',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 15,
@@ -231,7 +224,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
     marginTop: 5,
-    // backgroundColor: 'green',
     paddingHorizontal: 15,
   },
   bottomEditMode: {
@@ -240,7 +232,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     paddingVertical: 5,
-    // backgroundColor: 'green',
     paddingHorizontal: 15,
   },
   jersyContainerEditMode: {
@@ -268,7 +259,6 @@ const styles = StyleSheet.create({
     right: 2,
     bottom: 0,
     alignItems: 'flex-end',
-    // backgroundColor: 'grey',
   },
 });
 
