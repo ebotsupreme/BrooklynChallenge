@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   homeEditTeamButtonContainer: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 53 : 38,
+    top: Platform.OS === 'ios' ? 48 : 38,
     right: Platform.OS === 'ios' ? 80 : 60,
     bottom: 10,
     alignItems: 'flex-end',
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   removeTeamContainer: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 53 : 38,
+    top: Platform.OS === 'ios' ? 48 : 38,
     right: Platform.OS === 'ios' ? 15 : -2,
     bottom: 10,
     alignItems: 'flex-end',
@@ -211,9 +211,9 @@ const styles = StyleSheet.create({
   },
   editTeamButtonContainer: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? 53 : 35,
-    right: -5,
-    bottom: Platform.OS === 'android' ? 10 : 0,
+    top: Platform.OS === 'ios' ? 48 : 35,
+    right: Platform.OS === 'ios' ? 10 : -5,
+    bottom: Platform.OS === 'ios' ? 0 : 10,
     alignItems: 'flex-end',
     width: 50,
   },

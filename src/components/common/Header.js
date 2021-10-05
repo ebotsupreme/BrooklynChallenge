@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, StyleSheet, Platform, Share} from 'react-native';
-import {IconButton, Colors} from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 
 const Header = props => {
@@ -37,7 +37,7 @@ const Header = props => {
         <View style={styles.shareButtonContainer}>
           <IconButton
             icon="share-variant"
-            color={Colors.red500}
+            color={'#072F5F'}
             size={20}
             onPress={handleShareButton}
           />
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
   homePageHeaderTitle: {
     fontSize: 18,
     fontWeight: '600',
-    // color: '#072F5F',
   },
   shareButtonContainer: {
     position: 'absolute',

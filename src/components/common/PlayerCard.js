@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: '800',
-    marginTop: 15,
+    marginTop: Platform.OS === 'ios' ? 20 : 15,
   },
   titleStat: {
     fontSize: 16,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 20,
+    marginBottom: Platform.OS === 'ios' ? 25 : 20,
   },
   nameEditMode: {
     fontSize: 18,

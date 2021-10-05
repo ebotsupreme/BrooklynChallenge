@@ -225,8 +225,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: 15,
-    paddingBottom: 25,
+    paddingVertical: 20,
   },
   newTeam: {
     backgroundColor: '#3895D3',

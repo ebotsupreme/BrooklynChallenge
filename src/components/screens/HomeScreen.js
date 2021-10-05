@@ -1,6 +1,13 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, FlatList, Platform, Share} from 'react-native';
-import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
+import {
+  Button,
+  Modal,
+  Portal,
+  TextInput,
+  Provider,
+  Card,
+} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {
@@ -165,7 +172,6 @@ const HomeScreen = ({route, navigation}) => {
             </View>
           </Modal>
         </Portal>
-
         <View style={styles.buttonContainer}>
           {/* TODO: Could be resuable component - also used in Edit Screen */}
           <Button
@@ -241,7 +247,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   newTeam: {
     backgroundColor: '#3895D3',
