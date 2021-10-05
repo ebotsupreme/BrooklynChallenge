@@ -34,7 +34,7 @@ const BottomTabNavigator = () => {
         component={PlayerSelectionScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          headerTitle: props => <Header {...props} />,
+          // headerTitle: props => <Header {...props} />,
         }}
       />
       <Tab.Screen
@@ -42,7 +42,7 @@ const BottomTabNavigator = () => {
         component={TeamSelectionScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          headerTitle: props => <Header {...props} />,
+          // headerTitle: props => <Header {...props} />,
         }}
       />
       <Tab.Screen
@@ -50,7 +50,7 @@ const BottomTabNavigator = () => {
         component={EditScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          headerTitle: props => <Header {...props} />,
+          // headerTitle: props => <Header {...props} />,
         }}
       />
     </Tab.Navigator>

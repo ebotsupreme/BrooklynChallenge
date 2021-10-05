@@ -34,7 +34,7 @@ const Header = props => {
 
   return (
     <View style={styles.container}>
-      {props.children === 'Home' && (
+      {props.children === 'Home' && Platform.OS === 'ios' && (
         <View style={styles.shareButtonContainer}>
           <IconButton
             icon="share-variant"
@@ -44,7 +44,7 @@ const Header = props => {
           />
         </View>
       )}
-      <Logo props={props.children} />
+      {/* <Logo props={props.children} /> */}
       <Text style={styles.homePageHeaderTitle}>{props.children}</Text>
     </View>
   );
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
   },
   shareButtonContainer: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? -12 : -12,
-    right: Platform.OS === 'ios' ? -125 : -125,
+    top: Platform.OS === 'ios' ? -12 : -10,
+    right: Platform.OS === 'ios' ? -125 : -270,
     alignItems: 'center',
     width: 50,
     backgroundColor: 'grey',

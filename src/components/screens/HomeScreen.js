@@ -1,6 +1,14 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, StyleSheet, FlatList, Platform} from 'react-native';
-import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
+import {View, Text, StyleSheet, FlatList, Platform, Share} from 'react-native';
+import {
+  Button,
+  Modal,
+  Portal,
+  TextInput,
+  Provider,
+  IconButton,
+  Colors,
+} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   startLoading,
@@ -77,6 +85,32 @@ const HomeScreen = ({route, navigation}) => {
       : setIsAddNewTeamButtonDisabled(false);
   }, [teamState]);
 
+  // TODO: This can be refactored to a common component. currently using this in Header.js
+  const handleShareButton = () => {
+    let shareTeamPlayers = [];
+
+    teamState.teams.map(team => {
+      shareTeamPlayers.push(` Team: ${team.name} - Players:`);
+      team.players.map(player => {
+        shareTeamPlayers.push(` ${player.name}`);
+      });
+    });
+    shareMessage(shareTeamPlayers);
+  };
+
+  // TODO: This can be refactored to a common component. currently using this in Header.js
+  const shareMessage = payload => {
+    const payloadString = payload.join(' ');
+    console.log('payloadString ', payloadString);
+    // setMessage(payloadString);
+    Share.share({
+      message: payloadString,
+    })
+      // TODO: Add result or error message to Snackbar
+      .then(result => console.log(result))
+      .catch(errorMsg => console.log(errorMsg));
+  };
+
   const renderItem = ({item}) => (
     <TeamCard
       teamName={item.name}
@@ -145,7 +179,7 @@ const HomeScreen = ({route, navigation}) => {
             mode="contained"
             onPress={showModal}
             disabled={isAddNewTeamButtonDisabled}>
-            Add New Team
+            Add Team
           </Button>
           <Button
             style={styles.clear}
@@ -154,6 +188,16 @@ const HomeScreen = ({route, navigation}) => {
             onPress={handleClearTeam}>
             Clear
           </Button>
+          {/* NOTE: share button wasn't working in the header. Temporary work around */}
+          {Platform.OS === 'android' && (
+            <Button
+              icon="share-variant"
+              color={Colors.red500}
+              mode="contained"
+              onPress={handleShareButton}
+              style={{paddingLeft: 10, width: 50}}
+            />
+          )}
         </View>
         <View style={styles.teamCardsContainer}>
           {teamState.teams && (
