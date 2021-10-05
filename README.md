@@ -4,7 +4,6 @@ NBA fantasy app.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
 A fantasy app where the user can create up to three different custom teams and share with friends. Each team is limited to 5 players.
 
 ## Getting Started
