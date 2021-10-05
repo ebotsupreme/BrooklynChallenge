@@ -4,6 +4,7 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 // import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BottomTabNavigator from './src/components/navigation/TabNavigator';
+import StackNavigator from './src/components/navigation/StackNavigator';
 import {Provider} from 'react-redux';
 import {store} from './src/app/store';
 
@@ -18,6 +19,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
+        {/* <StackNavigator /> */}
         <BottomTabNavigator />
       </NavigationContainer>
     </Provider>
