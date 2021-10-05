@@ -1,12 +1,35 @@
-import React from 'react';
-import {Text, View, StyleSheet, Platform} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, StyleSheet, Platform, Share} from 'react-native';
 import {IconButton, Colors} from 'react-native-paper';
+import {useSelector} from 'react-redux';
 import Logo from './Logo';
 
 const Header = props => {
+  const [message, setMessage] = useState([]);
+  const teamState = useSelector(state => state.team);
+
   const handleShareButton = () => {
-    console.log('handleShareButton pressed');
-    console.log('props ', props);
+    let shareTeamPlayers = [];
+
+    teamState.teams.map(team => {
+      shareTeamPlayers.push(` Team: ${team.name} - Players:`);
+      team.players.map(player => {
+        shareTeamPlayers.push(` ${player.name}`);
+      });
+    });
+    shareMessage(shareTeamPlayers);
+  };
+
+  const shareMessage = payload => {
+    const payloadString = payload.join(' ');
+    console.log('payloadString ', payloadString);
+    setMessage(payloadString);
+    Share.share({
+      message: payloadString,
+    })
+      // TODO: Add result or error message to Snackbar
+      .then(result => console.log(result))
+      .catch(errorMsg => console.log(errorMsg));
   };
 
   return (
@@ -41,7 +64,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Platform.OS === 'ios' ? -12 : -12,
     right: Platform.OS === 'ios' ? -125 : -125,
-    // bottom: 10,
     alignItems: 'center',
     width: 50,
     backgroundColor: 'grey',

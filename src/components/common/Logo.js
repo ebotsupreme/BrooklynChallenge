@@ -3,7 +3,6 @@ import {View, StyleSheet, Platform} from 'react-native';
 import {IconButton, Colors} from 'react-native-paper';
 
 const Logo = ({props}) => {
-  console.log('props ', props);
   return (
     <View
       style={
@@ -25,7 +24,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Platform.OS === 'ios' ? -25 : -25,
     left: Platform.OS === 'ios' ? -135 : -135,
-    // bottom: 10,
     alignItems: 'center',
     width: 50,
     backgroundColor: 'grey',
@@ -34,7 +32,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: Platform.OS === 'ios' ? -25 : -25,
     left: Platform.OS === 'ios' ? -115 : -115,
-    // bottom: 10,
     alignItems: 'center',
     width: 50,
     backgroundColor: 'grey',
