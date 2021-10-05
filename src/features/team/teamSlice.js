@@ -24,6 +24,7 @@ export const teamSlice = createSlice({
       state.isLoaded = false;
     },
     addTeam: (state, action) => {
+      // TODO: Check for duplicate names
       state.teams = [...state.teams, action.payload];
       state.teamCount += 1;
       state.teamKeyCount += 1;
@@ -50,6 +51,7 @@ export const teamSlice = createSlice({
       state.isLoaded = true;
     },
     editTeam: (state, action) => {
+      // TODO: Check for duplicate names
       state.teams.map(team => {
         if (team.id === action.payload.customTeamId) {
           team.name = action.payload.name;
@@ -63,7 +65,12 @@ export const teamSlice = createSlice({
     addPlayer: (state, action) => {
       state.teams.map(team => {
         if (team.id === action.payload.customTeamId) {
-          return (team.players = [...team.players, action.payload]);
+          // NOTE: Check for duplicate players
+          if (team.players.find(player => player.id === action.payload.id)) {
+            return (team.players = [...team.players]);
+          } else {
+            return (team.players = [...team.players, action.payload]);
+          }
         }
       });
       state.isLoading = false;

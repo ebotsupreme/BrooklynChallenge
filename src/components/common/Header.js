@@ -21,7 +21,6 @@ const Header = props => {
 
   const shareMessage = payload => {
     const payloadString = payload.join(' ');
-    console.log('payloadString ', payloadString);
     setMessage(payloadString);
     Share.share({
       message: payloadString,

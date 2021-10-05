@@ -49,7 +49,14 @@ const PlayerSelectionScreen = ({route, navigation}) => {
       {error ? (
         <Text>There was an error.</Text>
       ) : isLoading ? (
-        <Text>Loading...</Text>
+        <View style={styles.loadingViewContainer}>
+          <Text
+            style={{
+              textAlign: 'center',
+            }}>
+            Loading...
+          </Text>
+        </View>
       ) : players ? (
         // TODO: look into delay when changing teams
         <View style={styles.container}>
@@ -70,6 +77,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 10,
+  },
+  loadingViewContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
 });
 

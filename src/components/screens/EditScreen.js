@@ -13,6 +13,9 @@ const EditScreen = ({route, navigation}) => {
     useState(false);
   const [visible, setVisible] = useState(false);
   const [currentTeam, setCurrentTeam] = useState(null);
+  // TODO: Update state for edit team name & city modal
+  const [editTeamName, setEditTeamName] = useState('');
+  const [editTeamCity, setEditTeamCity] = useState('');
   const teamState = useSelector(state => state.team);
   const {customTeamId, customTeamKey} = route.params;
 
@@ -27,9 +30,6 @@ const EditScreen = ({route, navigation}) => {
   } else {
     var {name, city, id} = '';
   }
-
-  const [editTeamName, setEditTeamName] = useState(name);
-  const [editTeamCity, setEditTeamCity] = useState(city);
 
   const dispatch = useDispatch();
 
@@ -118,7 +118,6 @@ const EditScreen = ({route, navigation}) => {
             style={styles.modalContainer}
             contentContainerStyle={styles.modalContent}>
             <View>
-              {/* TODO: Add validation - no empty strings */}
               <TextInput
                 theme={{colors: {primary: '#072F5F'}}}
                 label="Team Name"
