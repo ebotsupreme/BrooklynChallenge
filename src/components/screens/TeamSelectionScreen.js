@@ -89,7 +89,7 @@ const TeamSelectionScreen = ({route, navigation}) => {
       indicatorStyle={{backgroundColor: '#58CCED'}}
       style={{backgroundColor: '#072F5F'}}
       activeColor={'#58CCED'}
-      inactiveColor={'#1261A0'}
+      inactiveColor={'#3895D3'}
     />
   );
 
