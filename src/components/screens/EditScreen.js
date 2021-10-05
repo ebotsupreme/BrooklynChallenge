@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Platform} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {removeAllPlayers, editTeam} from '../../features/team/teamSlice';
 import {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     // margin: 40,
     // marginTop: 190,
     // marginBottom: 190,
-    margin: 30,
+    margin: Platform.OS === 'ios' ? 45 : 30,
     width: 300,
     height: 300,
     justifyContent: 'center',

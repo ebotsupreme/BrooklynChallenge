@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Platform} from 'react-native';
 import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: '#fafafa',
-    margin: 30,
+    margin: Platform.OS === 'ios' ? 45 : 30,
     // marginTop: 190,
     // marginBottom: 190,
     width: 300,
