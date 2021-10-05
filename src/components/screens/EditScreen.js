@@ -20,6 +20,7 @@ const EditScreen = ({route, navigation}) => {
   const [visible, setVisible] = useState(false);
   const [editTeamName, setEditTeamName] = useState('');
   const [editTeamCity, setEditTeamCity] = useState('');
+  const [currentTeam, setCurrentTeam] = useState(null);
   const teamState = useSelector(state => state.team);
   const {customTeamId, customTeamKey} = route.params;
 
@@ -30,8 +31,20 @@ const EditScreen = ({route, navigation}) => {
     'teamState.teams.length && customTeamKey && teamState.teams[customTeamKey]',
     teamState.teams[customTeamKey],
   );
-  if (teamState.teams[customTeamKey] !== undefined) {
-    var {name, city, id} = teamState && teamState.teams[customTeamKey];
+  // if (teamState.teams[customTeamKey] !== undefined) {
+  //   var {name, city, id} = teamState && teamState.teams[customTeamKey];
+  if (currentTeam !== undefined) {
+    if (!currentTeam) {
+    }
+    var {name, city, id} =
+      teamState && currentTeam ? currentTeam : teamState.teams[customTeamKey];
+    // if (teamState && teamState.teams[customTeamKey]) {
+    //   console.log('CURRENT TEAM EDIT customTeamKey , ', customTeamKey);
+    //   var {name, city, id} = teamState && teamState.teams[customTeamKey];
+    // } else {
+    //   console.log('CURRENT TEAM EDIT, ', currentTeam);
+    //   var {name, city, id} = teamState && currentTeam;
+    // }
   } else {
     var {name, city, id} = '';
   }
@@ -50,7 +63,21 @@ const EditScreen = ({route, navigation}) => {
     // console.log('Edit city ', city);
     // console.log('Edit id ', id);
     // console.log('showEditModal ', showEditModal);
-  }, [customTeamKey, getPlayerCount, teamState]);
+    getCurrentTeam();
+    console.log('current team is ', currentTeam);
+  }, [currentTeam, customTeamKey, getCurrentTeam, getPlayerCount, teamState]);
+
+  const getCurrentTeam = useCallback(() => {
+    if (teamState.teams) {
+      teamState.teams.map(team => {
+        if (team.id === customTeamId) {
+          console.log('EDIT SCREEN TEAMMATCH ', team);
+          setCurrentTeam(team);
+          // return team;
+        }
+      });
+    }
+  }, [customTeamId, teamState.teams]);
 
   const handleAddPlayer = () => {
     navigation.navigate('Team Selection', {
@@ -60,14 +87,13 @@ const EditScreen = ({route, navigation}) => {
   };
 
   const getPlayerCount = useCallback(() => {
-    if (teamState.teams[customTeamKey]) {
-      let playerCount =
-        teamState.teams && teamState.teams[customTeamKey].players.length;
+    if (currentTeam) {
+      let playerCount = teamState.teams && currentTeam.players.length;
       playerCount === 5
         ? setIsAddPlayerButtonDisabled(true)
         : setIsAddPlayerButtonDisabled(false);
     }
-  }, [customTeamKey, teamState]);
+  }, [currentTeam, teamState.teams]);
 
   const handleClearAll = () => {
     console.log('Clear all');
@@ -81,7 +107,7 @@ const EditScreen = ({route, navigation}) => {
   };
 
   const handleEditTeamModal = () => {
-    console.log('handleEditTeamModal');
+    console.log('handleEditTeamModal ', editTeamName, editTeamCity);
     // dispatch edit team here
     dispatch(
       editTeam({
@@ -107,7 +133,8 @@ const EditScreen = ({route, navigation}) => {
     return (
       <PlayerCard
         player={item}
-        teamName={teamState && teamState.teams[customTeamKey].name}
+        // teamName={teamState && teamState.teams[customTeamKey].name}
+        teamName={teamState && currentTeam.name}
         navigation={navigation}
         customTeamId={customTeamId}
         customTeamKey={customTeamKey}
@@ -163,7 +190,8 @@ const EditScreen = ({route, navigation}) => {
         </Portal>
 
         <View style={styles.container}>
-          {teamState.teams.length >= 1 && teamState.teams[customTeamKey] && (
+          {/* {teamState.teams.length >= 1 && teamState.teams[customTeamKey] && ( */}
+          {teamState.teams.length >= 1 && currentTeam && (
             <>
               {/* TODO: possible idea - pass teamState.teams[customTeamKey].name isntead of name to TeamCard */}
               <TeamCard
@@ -207,9 +235,10 @@ const EditScreen = ({route, navigation}) => {
             <Text>Loading...</Text>
           ) : teamState ? (
             <View style={{flex: 1}}>
-              {teamState.teams[customTeamKey] && (
+              {/* {teamState.teams[customTeamKey] && ( */}
+              {currentTeam && (
                 <FlatList
-                  data={teamState.teams[customTeamKey].players}
+                  data={currentTeam.players}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}
                   contentContainerStyle={{paddingVertical: 10}}

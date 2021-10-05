@@ -40,52 +40,64 @@ const HomeScreen = ({route, navigation}) => {
       return;
     }
 
+    dispatch(
+      addTeam({
+        key: teamState.teamKeyCount,
+        id: teamState.teamIdCount + 1,
+        name: teamName,
+        city: cityName,
+        players: [],
+      }),
+    );
+    customTeamKey = teamState.teamKeyCount;
+    customTeamId = teamState.teamIdCount + 1;
+
     // TODO: may have to refactor to loop teams
     // check for active teams
     // set team state
-    switch (teamState.teamCount) {
-      case 0:
-        dispatch(
-          addTeam({
-            key: 0,
-            id: 1,
-            name: teamName,
-            city: cityName,
-            players: [],
-          }),
-        );
-        customTeamId = 1;
-        customTeamKey = 0;
-        break;
-      case 1:
-        dispatch(
-          addTeam({
-            key: 1,
-            id: 2,
-            name: teamName,
-            city: cityName,
-            players: [],
-          }),
-        );
-        customTeamId = 2;
-        customTeamKey = 1;
-        break;
-      case 2:
-        dispatch(
-          addTeam({
-            key: 2,
-            id: 3,
-            name: teamName,
-            city: cityName,
-            players: [],
-          }),
-        );
-        customTeamId = 3;
-        customTeamKey = 2;
-        break;
-      default:
-        break;
-    }
+    // switch (teamState.teamCount) {
+    //   case 0:
+    //     dispatch(
+    //       addTeam({
+    //         key: 0,
+    //         id: 1,
+    //         name: teamName,
+    //         city: cityName,
+    //         players: [],
+    //       }),
+    //     );
+    //     customTeamId = 1;
+    //     customTeamKey = 0;
+    //     break;
+    //   case 1:
+    //     dispatch(
+    //       addTeam({
+    //         key: 1,
+    //         id: 2,
+    //         name: teamName,
+    //         city: cityName,
+    //         players: [],
+    //       }),
+    //     );
+    //     customTeamId = 2;
+    //     customTeamKey = 1;
+    //     break;
+    //   case 2:
+    //     dispatch(
+    //       addTeam({
+    //         key: 2,
+    //         id: 3,
+    //         name: teamName,
+    //         city: cityName,
+    //         players: [],
+    //       }),
+    //     );
+    //     customTeamId = 3;
+    //     customTeamKey = 2;
+    //     break;
+    //   default:
+    //     break;
+    // }
 
     setTeamName('');
     setCityName('');
