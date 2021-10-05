@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, Platform} from 'react-native';
 import {Card, IconButton, Colors, Provider} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
@@ -68,15 +68,27 @@ const TeamCard = ({
               <Text style={styles.teamName}>{teamName}</Text>
               <Text style={styles.teamCity}>{city}</Text>
             </View>
+            {Platform.OS === 'android' && (
+              <View style={styles.editTeamButtonContainer}>
+                <IconButton
+                  icon="account-edit"
+                  color={Colors.red500}
+                  size={30}
+                  onPress={handleEditTeam}
+                />
+              </View>
+            )}
           </Card>
-          <View style={styles.editTeamButtonContainer}>
-            <IconButton
-              icon="account-edit"
-              color={Colors.red500}
-              size={30}
-              onPress={handleEditTeam}
-            />
-          </View>
+          {Platform.OS === 'ios' && (
+            <View style={styles.editTeamButtonContainer}>
+              <IconButton
+                icon="account-edit"
+                color={Colors.red500}
+                size={30}
+                onPress={handleEditTeam}
+              />
+            </View>
+          )}
         </>
       )}
       {screen === 'Home' && (
@@ -87,23 +99,47 @@ const TeamCard = ({
                 <Text style={styles.teamName}>{teamName}</Text>
                 <Text style={styles.teamCity}>{city}</Text>
               </View>
+              {Platform.OS === 'android' && (
+                <>
+                  <View style={styles.homeEditTeamButtonContainer}>
+                    <IconButton
+                      icon="account-edit"
+                      color={Colors.red500}
+                      size={30}
+                      onPress={handleEditTeamModal}
+                    />
+                  </View>
+                  <View style={styles.removeTeamContainer}>
+                    <IconButton
+                      icon="account-multiple-remove"
+                      color={Colors.red500}
+                      size={30}
+                      onPress={handleRemoveTeam}
+                    />
+                  </View>
+                </>
+              )}
             </Card>
-            <View style={styles.homeEditTeamButtonContainer}>
-              <IconButton
-                icon="account-edit"
-                color={Colors.red500}
-                size={30}
-                onPress={handleEditTeamModal}
-              />
-            </View>
-            <View style={styles.removeTeamContainer}>
-              <IconButton
-                icon="account-multiple-remove"
-                color={Colors.red500}
-                size={30}
-                onPress={handleRemoveTeam}
-              />
-            </View>
+            {Platform.OS === 'ios' && (
+              <>
+                <View style={styles.homeEditTeamButtonContainer}>
+                  <IconButton
+                    icon="account-edit"
+                    color={Colors.red500}
+                    size={30}
+                    onPress={handleEditTeamModal}
+                  />
+                </View>
+                <View style={styles.removeTeamContainer}>
+                  <IconButton
+                    icon="account-multiple-remove"
+                    color={Colors.red500}
+                    size={30}
+                    onPress={handleRemoveTeam}
+                  />
+                </View>
+              </>
+            )}
           </View>
         </>
       )}
@@ -138,7 +174,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   teamName: {
-    fontSize: 24,
+    fontSize: 22,
     padding: 10,
     backgroundColor: 'yellow',
   },
@@ -155,27 +191,35 @@ const styles = StyleSheet.create({
   },
   homeEditTeamButtonContainer: {
     position: 'absolute',
-    top: 53,
-    right: 80,
+    // top: 53,
+    top: Platform.OS === 'ios' ? 53 : 40,
+    // right: 80,
+    right: Platform.OS === 'ios' ? 80 : 70,
     bottom: 10,
     alignItems: 'flex-end',
     width: 50,
+    backgroundColor: 'grey',
   },
   removeTeamContainer: {
     position: 'absolute',
-    top: 53,
-    right: 15,
+    top: Platform.OS === 'ios' ? 53 : 40,
+    // top: 53,
+    // right: 15,
+    right: Platform.OS === 'ios' ? 15 : 5,
     bottom: 10,
     alignItems: 'flex-end',
     width: 50,
+    backgroundColor: 'blue',
   },
   editTeamButtonContainer: {
     position: 'absolute',
-    top: 53,
+    top: Platform.OS === 'ios' ? 53 : 45,
+    // top: 53,
     right: 15,
     bottom: 10,
     alignItems: 'flex-end',
     width: 50,
+    backgroundColor: 'yellow',
   },
 });
 

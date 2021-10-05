@@ -7,7 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import EditScreen from '../screens/EditScreen';
 import PlayerSelectionScreen from '../screens/PlayerSelectionScreen';
 import TeamSelectionScreen from '../screens/TeamSelectionScreen';
-import BottomTabNavigator from './TabNavigator';
+// import BottomTabNavigator from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
 

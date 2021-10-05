@@ -7,7 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import EditScreen from '../screens/EditScreen';
 import PlayerSelectionScreen from '../screens/PlayerSelectionScreen';
 import TeamSelectionScreen from '../screens/TeamSelectionScreen';
-import StackNavigator from './StackNavigator';
+// import StackNavigator from './StackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,12 +17,10 @@ const BottomTabNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
-        // headerShown: false,
       }}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        // component={StackNavigator}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (
@@ -35,16 +33,6 @@ const BottomTabNavigator = () => {
         component={PlayerSelectionScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          // tabBarLabel: 'Player Selection',
-          // tabBarIcon: ({color, size}) => (
-          //   <MaterialCommunityIcons
-          //     name="account-multiple"
-          //     color={color}
-          //     size={size}
-          //   />
-          //   // <></>
-          // ),
-          // tabBarShowLabel: false,
         }}
       />
       <Tab.Screen
@@ -52,16 +40,6 @@ const BottomTabNavigator = () => {
         component={TeamSelectionScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          // tabBarLabel: 'Team Selection',
-          // tabBarIcon: ({color, size}) => (
-          //   <MaterialCommunityIcons
-          //     name="account-group"
-          //     color={color}
-          //     size={size}
-          //   />
-          //   // <></>
-          // ),
-          // tabBarShowLabel: false,
         }}
       />
       <Tab.Screen
@@ -69,12 +47,6 @@ const BottomTabNavigator = () => {
         component={EditScreen}
         options={{
           tabBarItemStyle: {display: 'none'},
-          // tabBarLabel: 'Edit Team',
-          // tabBarIcon: ({color, size}) => (
-          //   <MaterialCommunityIcons name="account" color={color} size={size} />
-          //   // <></>
-          // ),
-          // tabBarShowLabel: false,
         }}
       />
     </Tab.Navigator>

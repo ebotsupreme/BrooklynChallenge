@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   nameEditMode: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '800',
     marginTop: 5,
     // backgroundColor: 'green',

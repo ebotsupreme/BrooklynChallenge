@@ -235,9 +235,14 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: '#fafafa',
-    margin: 40,
-    marginTop: 190,
-    marginBottom: 190,
+    margin: 30,
+    // marginTop: 190,
+    // marginBottom: 190,
+    width: 300,
+    height: 300,
+    justifyContent: 'center',
+    // alignItems: 'center',
+
     borderRadius: 10,
   },
   modalContent: {
