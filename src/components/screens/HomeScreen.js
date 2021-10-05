@@ -1,13 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, StyleSheet, FlatList, Platform, Share} from 'react-native';
-import {
-  Button,
-  Modal,
-  Portal,
-  TextInput,
-  Provider,
-  Card,
-} from 'react-native-paper';
+import {Button, Modal, Portal, TextInput, Provider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {
@@ -19,10 +12,11 @@ import {
 
 import TeamCard from '../common/TeamCard';
 
-const HomeScreen = ({route, navigation}) => {
+const HomeScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [teamName, setTeamName] = useState('');
   const [cityName, setCityName] = useState('');
+  const [isAddButtonDisabled, setIsAddButtonDisabled] = useState(true);
   const [isAddNewTeamButtonDisabled, setIsAddNewTeamButtonDisabled] =
     useState(false);
   const teamState = useSelector(state => state.team);
@@ -33,11 +27,21 @@ const HomeScreen = ({route, navigation}) => {
 
   useEffect(() => {
     getTeamCount();
-  }, [getTeamCount, teamState]);
+    if (teamName && cityName) {
+      setIsAddButtonDisabled(false);
+    } else {
+      setIsAddButtonDisabled(true);
+      1;
+    }
+  }, [cityName, getTeamCount, teamName, teamState]);
 
   const handleAddTeam = () => {
     let customTeamId = '';
     let customTeamKey = '';
+
+    if (!teamName || !cityName) {
+      return;
+    }
 
     if (teamState.teamCount === 3) {
       return;
@@ -102,8 +106,6 @@ const HomeScreen = ({route, navigation}) => {
   // TODO: This can be refactored to a common component. currently using this in Header.js
   const shareMessage = payload => {
     const payloadString = payload.join(' ');
-    console.log('payloadString ', payloadString);
-    // setMessage(payloadString);
     Share.share({
       message: payloadString,
     })
@@ -126,7 +128,7 @@ const HomeScreen = ({route, navigation}) => {
   return (
     <Provider>
       <View style={styles.container}>
-        {/* TODO: Modal may need to be a common component, also used in TeamCard Home */}
+        {/* TODO: Make common component, also used in TeamCard Home */}
         <Portal>
           <Modal
             visible={visible}
@@ -134,7 +136,6 @@ const HomeScreen = ({route, navigation}) => {
             style={styles.modalContainer}
             contentContainerStyle={styles.modalContent}>
             <View>
-              {/* TODO: Add validation - no empty strings */}
               <TextInput
                 theme={{colors: {primary: '#072F5F'}}}
                 label="Team Name"
@@ -155,10 +156,14 @@ const HomeScreen = ({route, navigation}) => {
               />
               <View style={styles.modalButtonContainer}>
                 <Button
-                  style={styles.newTeam}
+                  style={[
+                    styles.newTeam,
+                    isAddButtonDisabled && {backgroundColor: '#D3D3D3'},
+                  ]}
                   icon="account-group"
                   mode="contained"
-                  onPress={handleAddTeam}>
+                  onPress={handleAddTeam}
+                  disabled={isAddButtonDisabled}>
                   Add
                 </Button>
                 <Button
